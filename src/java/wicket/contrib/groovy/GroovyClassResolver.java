@@ -30,7 +30,7 @@ import wicket.DefaultClassResolver;
 import wicket.IClassResolver;
 import wicket.WicketRuntimeException;
 import wicket.util.listener.IChangeListener;
-import wicket.util.resource.IResource;
+import wicket.util.resource.IResourceStream;
 import wicket.util.watch.ModificationWatcher;
 import EDU.oswego.cs.dl.util.concurrent.ConcurrentHashMap;
 
@@ -97,7 +97,7 @@ public class GroovyClassResolver implements IClassResolver
 		}
 
 		// Else, try Groovy.
-		final IResource resource = application.getResourceLocator().locate(classname,
+		final IResourceStream resource = application.getResourceLocator().locate(classname,
 				null, null, ".groovy");
 		if (resource != null)
 		{
@@ -133,7 +133,7 @@ public class GroovyClassResolver implements IClassResolver
 	 *            The Groovy resource
 	 * @return the Class object created by the groovy resouce
 	 */
-	private final Class loadGroovyFile(String classname, final IResource resource)
+	private final Class loadGroovyFile(String classname, final IResourceStream resource)
 	{
 		// Ensure that we use the correct classloader so that we can find
 		// classes in an application server.
@@ -210,7 +210,7 @@ public class GroovyClassResolver implements IClassResolver
 	 * @return Loaded class
 	 */
 	private Class loadGroovyFileAndWatchForChanges(final String classname,
-			final IResource resource)
+			final IResourceStream resource)
 	{
 		// Watch file in the future
 		final ModificationWatcher watcher = application.getResourceWatcher();
