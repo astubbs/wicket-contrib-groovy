@@ -13,11 +13,11 @@
 	</organization>
 	<inceptionYear>2005</inceptionYear>
 	<package>wicket</package>
-	<description>
-		The Velocity Panel component allows you to use Velocity (http://jakarta.apache.org/velocity)
-		macros in your Wicket applications.
-	</description>
-	<shortDescription>Panel component for Velocity/Wicket integration.</shortDescription>
+	<description><![CDATA[The Wicket Contrib Groovy integration project allows you to use
+				<a href="http://groovy.codehaus.org">Groovy</a> (a JVM scripting language),
+				to create Wicket pages. Instead of creating Java classes to match your
+				HTML, you create Groovy classes.]]></description>
+	<shortDescription>Integration of Groovy into Wicket as implementation language.</shortDescription>
 	<url>http://wicket-stuff.sourceforge.net/${pom.artifactId}</url>
 	<issueTrackingUrl>
 		http://sourceforge.net/tracker/?group_id=${maven.sourceforge.project.groupId}
