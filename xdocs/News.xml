@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<document>
+	<properties>
+		<title>News</title>
+	</properties>
+	<meta name="keyword" content="wicket, web, j2ee, java, components" />
+	<body>
+		<section name="News Archive">
+			<p>
+				Here is an overview of all Wicket related news items posted on our
+				<a href="http://wicket.sourceforge.net">front page</a>
+				.
+			</p>
+			<subsection name="March 22, 2005 - Wicket Stuff was accepted by SourceForge">
+				<p>
+					The Wicket team wishes to thank the SourceForge team for accepting Wicket Stuff
+					as a project on the SourceForge servers. This allows <a href="http://wicket.sourceforge.net">Wicket</a> to grow
+					further beyond our dreams.
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>
