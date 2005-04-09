@@ -52,6 +52,24 @@
 				<img alt="SourceForge.net"
 					src="http://sourceforge.net/sflogo.php?group_id=119783&amp;type=1" />
 			</a>
+			<p>
+				<!-- Begin Nedstat Basic code -->
+				<!-- Title: Wicket Contrib Groovy -->
+				<!-- URL: http://wicket-stuff.sourceforge.net/wicket-contrib-groovy -->
+				<script language="JavaScript" type="text/javascript" src="http://m1.nedstatbasic.net/basic.js">
+				</script>
+				<script language="JavaScript" type="text/javascript" src="nedstat.js">
+				</script>
+				<noscript>
+				<a target="_blank" href="http://www.nedstatbasic.net/stats?ADVPZAFJtL7GiqVQ1ddLPVNyrdgw"><img
+				src="http://m1.nedstatbasic.net/n?id=ADVPZAFJtL7GiqVQ1ddLPVNyrdgw"
+				border="0" width="18" height="18"
+				alt="Nedstat Basic - Free web site statistics
+				Personal homepage website counter" /></a><br />
+				<a target="_blank" href="http://www.nedstatbasic.net/">Free counter</a>
+				</noscript>
+				<!-- End Nedstat Basic code -->
+			</p>
 		</section>
 	</body>
 </document>
