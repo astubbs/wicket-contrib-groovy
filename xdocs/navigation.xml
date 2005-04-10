@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
-<project name="Wicket Contrib Groovy">
-	<title>Wicket Contrib Groovy</title>
+<project name="Groovy Integration">
+	<title>Wicket Groovy Integration</title>
 	<body>
 	    <links>
 	      <item name="Wicket"  href="http://wicket.sourceforge.net/"/>
 	      <item name="Stuff"  href="http://wicket-stuff.sourceforge.net/"/>
 	    </links>
 	
-	    <menu name="Wicket Contrib Groovy">
+	    <menu name="Groovy Integration">
 	        <item name="Home" href="/index.html"/>
 	        <item name="News" href="/News.html"/>
             <item name="License" href="/license.html"/>

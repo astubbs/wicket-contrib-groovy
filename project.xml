@@ -7,12 +7,13 @@
 	<name>Wicket Contrib Groovy</name>
 	<currentVersion>1.0</currentVersion>
 	<organization>
-		<name>Wicket developers</name>
-		<url>http://wicket.sourceforge.net</url>
-		<logo>http://sourceforge.net/sflogo.php?group_id=134391&amp;type=1</logo>
+		<name>Wicket Stuff</name>
+		<url>http://wicket-stuff.sourceforge.net</url>
+		<logo>http://wicket-stuff.sourceforge.net/images/projectLogo.png</logo>
 	</organization>
 	<inceptionYear>2005</inceptionYear>
 	<package>wicket</package>
+	<logo>/images/projectLogo.png</logo>
 	<description><![CDATA[The Wicket Contrib Groovy integration project allows you to use
 				<a href="http://groovy.codehaus.org">Groovy</a> (a JVM scripting language),
 				to create Wicket pages. Instead of creating Java classes to match your

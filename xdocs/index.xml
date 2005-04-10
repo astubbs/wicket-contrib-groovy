@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <document>
 	<properties>
-		<title>Wicket Contrib Groovy</title>
+		<title>Home</title>
 	</properties>
 	<meta name="keyword" content="wicket, web, j2ee, java, components, groovy" />
 	<body>
-		<section name="Welcome to Wicket Contrib Groovy">
+		<section name="Welcome to Wicket Groovy Integration">
 			<p>
-				The Wicket Contrib Groovy integration project allows you to use
+				The Wicket Groovy Integration project allows you to use
 				<a href="http://groovy.codehaus.org">Groovy</a> (a JVM scripting language),
 				to create Wicket pages. Instead of creating Java classes to match your
 				HTML, you create Groovy classes.
 			</p>
 			<p>
-				The Wicket Contrib Groovy integration is part of the
+				The Wicket Groovy integration is part of the
 				<a href="/index.html">Wicket Stuff</a>
 				project. This Wicket powered project provides non-core components to the Wicket
 				project.
