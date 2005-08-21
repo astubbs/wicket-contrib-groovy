@@ -97,7 +97,7 @@ public class GroovyClassResolver implements IClassResolver
 		}
 
 		// Else, try Groovy.
-		final IResourceStream resource = application.getResourceStreamLocator().locate(classname.replace('.', '/'),
+		final IResourceStream resource = application.getResourceStreamLocator().locate(getClass().getClassLoader(),classname.replace('.', '/'),
 				null, null, ".groovy");
 		if (resource != null)
 		{
