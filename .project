@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <projectDescription>
-	<name>wicket-contrib-groovy</name>
-	<comment></comment>
-	<projects>
-	</projects>
-	<buildSpec>
-		<buildCommand>
-			<name>org.eclipse.jdt.core.javabuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-	</buildSpec>
-	<natures>
-		<nature>org.eclipse.jdt.core.javanature</nature>
-	</natures>
+  <name>wicket-contrib-groovy</name>
+  <comment>The Wicket Contrib Groovy integration project allows you to use &lt;a href="http://groovy.codehaus.org"&gt;Groovy&lt;/a&gt; (a JVM scripting language), to create Wicket pages. Instead of creating Java classes to match your HTML, you create Groovy classes.</comment>
+  <projects>
+    <project>wicket</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+      <arguments>
+      </arguments>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
 </projectDescription>

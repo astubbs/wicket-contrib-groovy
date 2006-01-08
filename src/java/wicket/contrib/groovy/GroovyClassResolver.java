@@ -17,7 +17,6 @@
  */
 package wicket.contrib.groovy;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -26,13 +25,13 @@ import org.apache.commons.logging.LogFactory;
 import org.codehaus.groovy.control.CompilationFailedException;
 
 import wicket.Application;
-import wicket.DefaultClassResolver;
-import wicket.IClassResolver;
 import wicket.WicketRuntimeException;
+import wicket.application.DefaultClassResolver;
+import wicket.application.IClassResolver;
+import wicket.util.concurrent.ConcurrentReaderHashMap;
 import wicket.util.listener.IChangeListener;
 import wicket.util.resource.IResourceStream;
 import wicket.util.watch.ModificationWatcher;
-import EDU.oswego.cs.dl.util.concurrent.ConcurrentHashMap;
 
 /**
  * Extends the default Page Factory to allow for Groovy based classes.
@@ -49,7 +48,7 @@ public class GroovyClassResolver implements IClassResolver
 	 * Caching map of class name to groovy class; not sure if GroovyClassLoader
 	 * does it as well
 	 */
-	private final Map classCache = new ConcurrentHashMap();
+	private final Map classCache = new ConcurrentReaderHashMap();
 
 	/** Default class resolver */
 	private final IClassResolver defaultClassResolver = new DefaultClassResolver();
@@ -76,7 +75,7 @@ public class GroovyClassResolver implements IClassResolver
 	 * @param classname
 	 *            The object's class name
 	 * @return The class
-	 * @see wicket.IClassResolver#resolveClass(String)
+	 * @see wicket.application.IClassResolver#resolveClass(String)
 	 */
 	public Class resolveClass(final String classname)
 	{
@@ -97,8 +96,10 @@ public class GroovyClassResolver implements IClassResolver
 		}
 
 		// Else, try Groovy.
-		final IResourceStream resource = application.getResourceStreamLocator().locate(getClass().getClassLoader(),classname.replace('.', '/'),
-				null, null, ".groovy");
+		final IResourceStream resource = application.getResourceSettings().getResourceStreamLocator().
+					locate(getClass().getClassLoader(),classname.replace('.', '/'),
+							null, null, ".groovy");
+		
 		if (resource != null)
 		{
 			try
@@ -174,10 +175,6 @@ public class GroovyClassResolver implements IClassResolver
 		{
 			throw new WicketRuntimeException("Error parsing groovy file: " + resource, e);
 		}
-		catch (IOException e)
-		{
-			throw new WicketRuntimeException("Error reading groovy file: " + resource, e);
-		}
 		catch (Throwable e)
 		{
 			throw new WicketRuntimeException("Error while reading groovy file: "
@@ -213,7 +210,7 @@ public class GroovyClassResolver implements IClassResolver
 			final IResourceStream resource)
 	{
 		// Watch file in the future
-		final ModificationWatcher watcher = application.getResourceWatcher();
+		final ModificationWatcher watcher = application.getResourceSettings().getResourceWatcher();
 
 		if (watcher != null)
 		{
