@@ -18,31 +18,34 @@
  */
 package wicket.contrib.examples.groovy;
 
+import wicket.Page;
 import wicket.application.IClassResolver;
 import wicket.contrib.groovy.GroovyClassResolver;
 import wicket.protocol.http.WebApplication;
 
 /**
  * WicketServlet class for hello world example.
+ * 
  * @author Jonathan Locke
  */
 public class GroovyApplication extends WebApplication
 {
-    /**
-     * Constructor.
-     */
-    public GroovyApplication()
-    {
-        final IClassResolver resolver = new GroovyClassResolver(this);
-    	getApplicationSettings().setClassResolver(resolver);
-    }
+	/**
+	 * Constructor.
+	 */
+	public GroovyApplication()
+	{
+		final IClassResolver resolver = new GroovyClassResolver(this);
+		getApplicationSettings().setClassResolver(resolver);
+	}
 
-    /**
-     * @return Class
-     */
-    public Class getHomePage()
-    {
-    	return getApplicationSettings().getClassResolver().resolveClass(
-    			"wicket.contrib.examples.groovy.Page1");
-    }
+	/**
+	 * @return Class
+	 */
+	@SuppressWarnings("unchecked")
+	public Class< ? extends Page> getHomePage()
+	{
+		return getApplicationSettings().getClassResolver().resolveClass(
+				"wicket.contrib.examples.groovy.Page1");
+	}
 }

@@ -75,6 +75,7 @@ public class GroovyWarClassLoader extends GroovyClassLoader
 	 * @throws ClassNotFoundException,
 	 *             if class could not be loaded
 	 */
+	@SuppressWarnings("unchecked")
 	protected Class findClass(final String name) throws ClassNotFoundException
 	{
 		try

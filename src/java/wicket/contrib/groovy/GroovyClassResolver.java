@@ -18,7 +18,6 @@
 package wicket.contrib.groovy;
 
 import java.io.InputStream;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
