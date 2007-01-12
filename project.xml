@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+	<pomVersion>3</pomVersion>
+	<groupId>wicket-stuff</groupId>
+	<id>wicket-contrib-groovy</id>
+	<name>Wicket Contrib Groovy</name>
+	<currentVersion>1.0</currentVersion>
+	<organization>
+		<name>Wicket Stuff</name>
+		<url>http://wicket-stuff.sourceforge.net</url>
+		<logo>http://wicket-stuff.sourceforge.net/images/projectLogo.png</logo>
+	</organization>
+	<inceptionYear>2005</inceptionYear>
+	<package>wicket</package>
+	<logo>/images/projectLogo.png</logo>
+	<description><![CDATA[The Wicket Contrib Groovy integration project allows you to use
+				<a href="http://groovy.codehaus.org">Groovy</a> (a JVM scripting language),
+				to create Wicket pages. Instead of creating Java classes to match your
+				HTML, you create Groovy classes.]]></description>
+	<shortDescription>Integration of Groovy into Wicket as implementation language.</shortDescription>
+	<url>http://wicket-stuff.sourceforge.net/${pom.artifactId}</url>
+	<issueTrackingUrl>
+		http://sourceforge.net/tracker/?group_id=${maven.sourceforge.project.groupId}
+	</issueTrackingUrl>
+	<siteAddress>shell.sourceforge.net</siteAddress>
+	<siteDirectory>/home/groups/w/wi/wicket-stuff/htdocs/${pom.artifactId}</siteDirectory>
+	<repository>
+		<connection>
+			scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/${pom.groupId}:${pom.artifactId}
+		</connection>
+		<developerConnection>
+			scm:cvs:ext:${maven.username}@cvs.sourceforge.net:/cvsroot/${pom.groupId}:${pom.artifactId}
+		</developerConnection>
+		<url>http://cvs.sourceforge.net/viewcvs.py/${pom.groupId}/${pom.artifactId}</url>
+	</repository>
+	<versions></versions>
+	<mailingLists>
+		<mailingList>
+			<name>Wicket Stuff Dev List</name>
+			<subscribe>
+				http://lists.sourceforge.net/mailman/listinfo/${pom.groupId}-develop
+			</subscribe>
+			<unsubscribe>
+				http://lists.sourceforge.net/mailman/listinfo/${pom.groupId}-develop
+			</unsubscribe>
+			<archive>
+				http://sourceforge.net/mailarchive/forum.php?forum=${pom.groupId}-develop
+			</archive>
+		</mailingList>
+		<mailingList>
+			<name>Wicket Stuff User List</name>
+			<subscribe>http://lists.sourceforge.net/mailman/listinfo/${pom.groupId}-user</subscribe>
+			<unsubscribe>
+				http://lists.sourceforge.net/mailman/listinfo/${pom.groupId}-user
+			</unsubscribe>
+			<archive>
+				http://sourceforge.net/mailarchive/forum.php?forum=${pom.groupId}-user
+			</archive>
+		</mailingList>
+		<mailingList>
+			<name>Wicket Stuff CVS commit List</name>
+			<subscribe>
+				http://lists.sourceforge.net/mailman/listinfo/${pom.groupId}-autocvs
+			</subscribe>
+			<unsubscribe>
+				http://lists.sourceforge.net/mailman/listinfo/${pom.groupId}-autocvs
+			</unsubscribe>
+			<archive>
+				http://sourceforge.net/mailarchive/forum.php?forum=${pom.groupId}-autocvs
+			</archive>
+		</mailingList>
+	</mailingLists>
+	<developers>
+		<developer>
+			<name>Juergen Donnerstag</name>
+			<id>jdonnerstag</id>
+			<email>jdonnerstag at users.sourceforge.net</email>
+		</developer>
+	</developers>
+	<contributors></contributors>
+	<dependencies>
+		<!--  dependency>
+			<groupId>ognl</groupId>
+			<artifactId>ognl</artifactId>
+			<version>2.6.7</version>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency -->
+		<dependency>
+			<groupId>servletapi</groupId>
+			<artifactId>servletapi</artifactId>
+			<version>2.3</version>
+			<properties>
+				<war.bundle>false</war.bundle>
+			</properties>
+		</dependency>
+		<!--  dependency>
+			<groupId>concurrent</groupId>
+			<artifactId>concurrent</artifactId>
+			<version>1.3.3</version>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.0.4</version>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
+		<dependency>
+			<groupId>wicket</groupId>
+			<artifactId>wicket</artifactId>
+			<version>1.2-SNAPSHOT</version>
+			<properties>
+				<eclipse.dependency>true</eclipse.dependency>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
+		<dependency>
+			<groupId>groovy</groupId>
+			<artifactId>groovy</artifactId>
+			<version>1.0-jsr-04</version>
+			<type>jar</type>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
+		<dependency>
+			<groupId>asm</groupId>
+			<artifactId>asm-all</artifactId>
+			<version>2.2</version>
+			<type>jar</type>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
+		<dependency>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>2.7.5</version>
+			<type>jar</type>
+			<properties>
+				<war.bundle>true</war.bundle>
+			</properties>
+		</dependency>
+	</dependencies>
+	<build>
+		<sourceDirectory>src/java</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+	</build>
+	<reports>
+		<report>maven-license-plugin</report>
+		<report>maven-javadoc-plugin</report>
+	</reports>
+	<properties />
+</project>
