@@ -19,6 +19,7 @@ package wicket.contrib.groovy;
 
 import java.io.InputStream;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,7 +29,6 @@ import wicket.Application;
 import wicket.WicketRuntimeException;
 import wicket.application.DefaultClassResolver;
 import wicket.application.IClassResolver;
-import wicket.util.concurrent.ConcurrentReaderHashMap;
 import wicket.util.listener.IChangeListener;
 import wicket.util.resource.IResourceStream;
 import wicket.util.watch.ModificationWatcher;
@@ -48,7 +48,8 @@ public class GroovyClassResolver implements IClassResolver
 	 * Caching map of class name to groovy class; not sure if GroovyClassLoader
 	 * does it as well
 	 */
-	private final Map classCache = new ConcurrentReaderHashMap();
+	private ConcurrentHashMap<String, Class> classCache = new ConcurrentHashMap<String, Class>(
+			64, 0.75f, 1);
 
 	/** Default class resolver */
 	private final IClassResolver defaultClassResolver = new DefaultClassResolver();
@@ -89,17 +90,17 @@ public class GroovyClassResolver implements IClassResolver
 		}
 
 		// If definition already loaded, ...
-		Class groovyPageClass = (Class) classCache.get(classname);
+		Class groovyPageClass = classCache.get(classname);
 		if (groovyPageClass != null)
 		{
 			return groovyPageClass;
 		}
 
 		// Else, try Groovy.
-		final IResourceStream resource = application.getResourceSettings().getResourceStreamLocator().
-					locate(getClass(),classname.replace('.', '/'),
-							null, null, ".groovy");
-		
+		final IResourceStream resource = application.getResourceSettings()
+				.getResourceStreamFactory().locate(getClass(),
+						classname.replace('.', '/'), null, null, ".groovy");
+
 		if (resource != null)
 		{
 			try
@@ -210,7 +211,8 @@ public class GroovyClassResolver implements IClassResolver
 			final IResourceStream resource)
 	{
 		// Watch file in the future
-		final ModificationWatcher watcher = application.getResourceSettings().getResourceWatcher();
+		final ModificationWatcher watcher = application.getResourceSettings()
+				.getResourceWatcher(true);
 
 		if (watcher != null)
 		{

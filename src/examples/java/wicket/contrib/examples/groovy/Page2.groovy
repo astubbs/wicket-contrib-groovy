@@ -33,6 +33,6 @@ public class Page2 extends WicketExamplePage
      */
     public Page2(PageParameters parameters)
     {
-        add(new NavomaticBorder("navomaticBorder"));
+        new NavomaticBorder(this, "navomaticBorder");
     }
 }

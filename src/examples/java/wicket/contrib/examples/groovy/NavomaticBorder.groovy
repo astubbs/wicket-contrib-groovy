@@ -18,6 +18,7 @@
  */
 package wicket.contrib.examples.groovy;
 
+import wicket.MarkupContainer;
 import wicket.markup.html.border.Border;
 import wicket.markup.html.border.BoxBorder;
 
@@ -30,10 +31,10 @@ public class NavomaticBorder extends Border
      * Constructor
      * @param componentName The name of this component
      */
-    public NavomaticBorder(String componentName)
+    public NavomaticBorder(MarkupContainer parent, String componentName)
     {
-        super(componentName);
-        add(new BoxBorder("boxBorder"));
-        add(new BoxBorder("boxBorder2"));
+        super(parent, componentName);
+        new BoxBorder(this, "boxBorder");
+        new BoxBorder(this, "boxBorder2");
     }
 }

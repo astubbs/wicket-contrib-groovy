@@ -23,8 +23,6 @@ import wicket.util.string.Strings;
 
 /**
  * Base class for all example pages.
- * 
- * @author Jonathan Locke
  */
 public class WicketExamplePage extends WebPage
 {
@@ -34,6 +32,6 @@ public class WicketExamplePage extends WebPage
     public WicketExamplePage()
     {
         final String packageName = getClass().getPackage().getName();
-        add(new WicketExampleHeader("mainNavigation", Strings.afterLast(packageName, '.')));
+        new WicketExampleHeader(this, "mainNavigation", Strings.afterLast(packageName, '.'));
     }
 }
