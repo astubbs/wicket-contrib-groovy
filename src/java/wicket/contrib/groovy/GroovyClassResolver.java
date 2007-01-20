@@ -96,10 +96,10 @@ public class GroovyClassResolver implements IClassResolver
 		}
 
 		// Else, try Groovy.
-		final IResourceStream resource = application.getResourceSettings().getResourceStreamLocator().
-					locate(getClass(),classname.replace('.', '/'),
-							null, null, ".groovy");
-		
+		final IResourceStream resource = application.getResourceSettings()
+				.getResourceStreamLocator().locate(getClass(),
+						classname.replace('.', '/'), null, null, ".groovy");
+
 		if (resource != null)
 		{
 			try
@@ -210,7 +210,8 @@ public class GroovyClassResolver implements IClassResolver
 			final IResourceStream resource)
 	{
 		// Watch file in the future
-		final ModificationWatcher watcher = application.getResourceSettings().getResourceWatcher();
+		final ModificationWatcher watcher = application.getResourceSettings()
+				.getResourceWatcher(true);
 
 		if (watcher != null)
 		{
