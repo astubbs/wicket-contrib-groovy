@@ -7,8 +7,13 @@
       <name>org.eclipse.jdt.core.javabuilder</name>
       <arguments/>
     </buildCommand>
+    <buildCommand>
+      <name>org.codehaus.groovy.eclipse.groovyBuilder</name>
+      <arguments/>
+    </buildCommand>
   </buildSpec>
   <natures>
     <nature>org.eclipse.jdt.core.javanature</nature>
+    <nature>org.codehaus.groovy.eclipse.groovyNature</nature>
   </natures>
 </projectDescription>
