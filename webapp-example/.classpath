@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="M2_REPO/freemarker/freemarker/2.3.3/freemarker-2.3.3.jar"/>
+	<classpathentry kind="src" path="/wicket-contrib-groovy"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/wicket/wicket/1.3-incubating-SNAPSHOT/wicket-1.3-incubating-SNAPSHOT.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="var" path="M2_REPO/groovy/groovy/1.0/groovy-1.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.13/log4j-1.2.13.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/bin/eclipse-bea-3.2/Workshop_Studio_3.2_569/Workshop/eclipse/plugins/org.codehaus.groovy.eclipse_1.0.0.20070118/lib/commons-io-1.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/bin/eclipse-bea-3.2/Workshop_Studio_3.2_569/Workshop/eclipse/plugins/org.codehaus.groovy.eclipse_1.0.0.20070118/lib/commons-lang-2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/bin/eclipse-bea-3.2/Workshop_Studio_3.2_569/Workshop/eclipse/plugins/org.codehaus.groovy.eclipse_1.0.0.20070118/lib/groovy-all-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/groovy-classes"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
