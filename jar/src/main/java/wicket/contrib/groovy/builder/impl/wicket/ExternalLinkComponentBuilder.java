@@ -15,17 +15,18 @@ package wicket.contrib.groovy.builder.impl.wicket;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-import org.apache.commons.beanutils.ConstructorUtils;
 
 import wicket.Component;
 import wicket.contrib.groovy.builder.BaseComponentBuilder;
 import wicket.contrib.groovy.builder.WicketComponentBuilderException;
 
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class ExternalLinkComponentBuilder extends BaseComponentBuilder
 {
 

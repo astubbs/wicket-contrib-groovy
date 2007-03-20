@@ -18,6 +18,14 @@ import java.util.Map;
 
 import wicket.Component;
 
+/**
+ * For complex components, or ones that simply don't have an implementation yet.  Put this in the tree.
+ * Will prevent users from attempting to use the component type (you can still manually create a component
+ * with the builder, as always).
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class UnimplementedComponentBuilder extends BaseComponentBuilder
 {
 

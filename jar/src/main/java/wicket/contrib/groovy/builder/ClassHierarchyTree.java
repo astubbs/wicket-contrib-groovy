@@ -18,8 +18,11 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * I'm quite sure this exists somewhere, but I want it done relatively quick and dirty, so...
- * @author Kevin
+ * I'm quite sure this exists somewhere, but I want it done relatively quick and dirty.
+ * It works like a tree map.  Classes are the key for the map, but if a particular class 
+ * isn't in the tree, it'll find the next highest in terms of parent class.
+ * 
+ * @author Kevin Galligan
  *
  */
 public class ClassHierarchyTree {

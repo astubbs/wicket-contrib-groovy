@@ -20,7 +20,11 @@ import java.util.Map;
 import wicket.contrib.groovy.builder.WicketComponentBuilderException;
 import wicket.contrib.groovy.builder.util.AttributeUtils;
 
-
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class TextFieldComponentBuilder extends FormComponentComponentBuilder
 {
 	public TextFieldComponentBuilder(Class componentClass)

@@ -23,7 +23,11 @@ import wicket.contrib.groovy.builder.util.AttributeUtils;
 import wicket.model.IModel;
 import wicket.model.Model;
 
-
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class LoopComponentBuilder extends GenericComponentBuilder
 {
 	static final String[] INTERATIONS_NAMES = new String[]{"iterations", "times", "loops"};

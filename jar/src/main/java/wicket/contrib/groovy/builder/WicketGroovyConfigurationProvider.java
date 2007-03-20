@@ -13,6 +13,11 @@
  */
 package wicket.contrib.groovy.builder;
 
+/**
+ * Convenience interface
+ * @author Kevin Galligan
+ *
+ */
 public interface WicketGroovyConfigurationProvider {
 	public WicketGroovyConfiguration getConfiguration();
 }

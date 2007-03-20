@@ -18,12 +18,15 @@
  */
 package wicket.contrib.examples.groovy;
 
-import wicket.application.IClassResolver;
-import wicket.contrib.groovy.GroovyClassResolver;
 import wicket.protocol.http.WebApplication;
 
 /**
  * WicketServlet class for hello world example.
+ * 
+ * *Update* Kevin Galligan.  Sorry, I killed this example temporarily.  My builder 
+ * code is just compiling the groovy code rather than live interpretation.  As I get
+ * things sorted out, I'll re-enable everything.
+ * 
  * @author Jonathan Locke
  */
 public class GroovyApplication extends WebApplication
@@ -33,8 +36,8 @@ public class GroovyApplication extends WebApplication
      */
     public GroovyApplication()
     {
-        final IClassResolver resolver = new GroovyClassResolver(this);
-    	getApplicationSettings().setClassResolver(resolver);
+//        final IClassResolver resolver = new GroovyClassResolver(this);
+//    	getApplicationSettings().setClassResolver(resolver);
     }
 
     /**
@@ -42,7 +45,13 @@ public class GroovyApplication extends WebApplication
      */
     public Class getHomePage()
     {
-    	return getApplicationSettings().getClassResolver().resolveClass(
-    			"wicket.contrib.examples.groovy.Page1");
+    	try
+		{
+			return Class.forName("wicket.contrib.examples.groovy.builder.FormsPage");
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new RuntimeException();
+		}
     }
 }

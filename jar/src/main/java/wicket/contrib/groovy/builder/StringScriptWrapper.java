@@ -24,16 +24,14 @@ import java.util.Map;
 import org.apache.commons.collections.map.SingletonMap;
 
 /**
- * Simple wrapper for string scripts in the builder.  Keeps the Script object
- * transient to avoid issues with serialization.  Incidentally, that's why we don't
- * use closures.  If there's a way to swap a closure in as an object method, and it can
- * get around serialization, we might have a different way of doing it.
+ * Originally this was used because Closures aren't serializable.  Turns out, Closure Classes are.
+ * This should be removed, unless there is a good use case for it.
  * 
  * @deprecated
  * 
  * TODO: Figure out if the script shell can be kept around.
  * 
- * @author Kevin
+ * @author Kevin Galligan
  *
  */
 public class StringScriptWrapper implements Serializable, ScriptWrapper

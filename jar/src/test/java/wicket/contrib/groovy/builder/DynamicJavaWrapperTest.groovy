@@ -17,21 +17,51 @@ import org.codehaus.groovy.runtime.InvokerHelper
 class DynamicJavaWrapperTest extends GroovyTestCase implements Serializable {
 
 	def classLevelTest = "beforeOnSubmit"
-
-	void testDynamicWrapping() {
-		Class form = SomeClass.class
+	void setUp()
+	{
+		WicketComponentOverrideDescriptor desc = getDescriptor()
 		
-		def closure = {classLevelTest = "afterOnSubmit"}
-		def method = BaseComponentBuilder.matchClosuresToMethods(form, "onSubmit", closure)
-		                
-		Class groovyFormClass = DynamicJavaWrapperUtil.wrapClass(form, [method], [closure] )
+		Class groovyFormClass = BaseComponentBuilder.getDynamicJavaWrapper().wrapClass(desc.javaClass, desc.methods, desc.closures)
 		
 		def newForm = groovyFormClass.getConstructor((Class[])[String.class]).newInstance((Object[])["newForm"])
 		
 		newForm.onSubmit()
+	}
+	
+	WicketComponentOverrideDescriptor getDescriptor()
+	{
+		Class form = SomeClass.class
+		
+		def closure = {classLevelTest = "afterOnSubmit"}
+		def method = BaseComponentBuilder.matchClosuresToMethods(form, "onSubmit", closure)
+		
+		WicketComponentOverrideDescriptor descriptor = 
+			new WicketComponentOverrideDescriptor(javaClass:SomeClass.class, methods:[BaseComponentBuilder.matchClosuresToMethods(form, "onSubmit", closure)],
+					closures:[{classLevelTest = "afterOnSubmit"}], extraCode:null, interfaces:null)
+		
+		return descriptor
+	}
+	
+	void testDynamicWrapping() {
+		
 		
 		assertEquals classLevelTest, "afterOnSubmit"
 	}
+	
+	//Cache disabled for now.  Problems with old owner references
+//	void testDynamicClassCache()
+//	{
+//		WicketComponentOverrideDescriptor desc1 = getDescriptor()
+//		WicketComponentOverrideDescriptor desc2 = getDescriptor()
+//		
+//		assert desc1.equals(desc2)
+//		assertEquals desc1.hashCode(), desc2.hashCode()
+//		
+//		Map cachedClasses =  BaseComponentBuilder.getDynamicJavaWrapper().cachedClasses
+//		Class componentClass = cachedClasses.get(getDescriptor()) 
+//		
+//		assert componentClass != null
+//	}
 }
 
 class SomeClass

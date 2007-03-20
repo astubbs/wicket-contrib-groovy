@@ -13,17 +13,26 @@
  */
 package wicket.contrib.groovy.builder.impl.wicket.link;
 
-import java.util.List;
 import java.util.Map;
-
 
 import wicket.Component;
 import wicket.MarkupContainer;
 import wicket.contrib.groovy.builder.impl.wicket.GenericComponentBuilder;
 import wicket.markup.html.basic.Label;
 import wicket.model.IModel;
-import wicket.model.Model;
 
+/**
+ * Base for link component builders.  This is pretty simple, but adds a convenience feature.
+ * If you supply "label" in the map of attributes, a Label component with key 'label'
+ * will be automatically inserted under the link.  So, you could have the following:
+ * 
+ * link("linkKey", label:"Click Me", onClick:{println "Clicked"})
+ * 
+ * <a href="#" wicket:id="linkKey"><span wicket:id="label"></span></a>
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class LinkComponentBuilder extends GenericComponentBuilder
 {
 

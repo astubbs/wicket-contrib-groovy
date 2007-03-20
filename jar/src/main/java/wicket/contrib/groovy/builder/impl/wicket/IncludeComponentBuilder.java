@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class IncludeComponentBuilder extends GenericComponentBuilder
 {
 	public IncludeComponentBuilder(Class componentClass)

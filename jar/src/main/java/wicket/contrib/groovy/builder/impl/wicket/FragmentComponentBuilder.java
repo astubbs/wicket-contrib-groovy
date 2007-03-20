@@ -19,7 +19,11 @@ import java.util.Map;
 
 import wicket.contrib.groovy.builder.WicketComponentBuilderException;
 
-
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class FragmentComponentBuilder extends GenericComponentBuilder
 {
 	public FragmentComponentBuilder(Class componentClass)

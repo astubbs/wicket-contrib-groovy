@@ -13,6 +13,12 @@
  */
 package wicket.contrib.groovy.builder;
 
+/**
+ * Override this to provide the builder with custom configuration.
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public abstract class AbstractWicketGroovyConfiguration implements WicketGroovyConfiguration
 {
 	/* (non-Javadoc)

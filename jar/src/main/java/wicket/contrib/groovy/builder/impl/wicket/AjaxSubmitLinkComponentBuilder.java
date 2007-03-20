@@ -13,29 +13,17 @@
  */
 package wicket.contrib.groovy.builder.impl.wicket;
 
-import groovy.lang.Closure;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Modifier;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-import org.apache.commons.collections.MapUtils;
-
-import wicket.Component;
-import wicket.ajax.AjaxRequestTarget;
-import wicket.ajax.markup.html.form.AjaxSubmitLink;
-import wicket.contrib.groovy.builder.BaseComponentBuilder;
-import wicket.contrib.groovy.builder.ClosureScriptWrapper;
-import wicket.contrib.groovy.builder.ScriptWrapper;
-import wicket.contrib.groovy.builder.StringScriptWrapper;
 import wicket.contrib.groovy.builder.WicketComponentBuilderException;
 import wicket.contrib.groovy.builder.util.ListConstructors;
-import wicket.markup.html.form.Form;
 
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class AjaxSubmitLinkComponentBuilder extends GenericComponentBuilder
 {
 	public AjaxSubmitLinkComponentBuilder(Class componentClass)

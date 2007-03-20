@@ -15,6 +15,14 @@ package wicket.contrib.groovy.builder;
 
 import groovy.lang.Closure;
 
+/**
+ * Used by the dynamic component generator.  The new dynamic class will implement this, and the 
+ * builder code can cast the object as this type and set the closure for the populateItem method.
+ * (This is for Java's sake.  In groovy code, the duck typing would handle this)
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public interface ListViewPopulateItemClosure
 {
 	public void setPopulateItemClosure(Closure closure);

@@ -22,19 +22,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConstructorUtils;
-import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtils;
-
-import sun.awt.AppContext;
 
 import wicket.Component;
 import wicket.contrib.groovy.builder.util.AttributeUtils;
 import wicket.model.IModel;
 import wicket.model.Model;
 
+/**
+ * Core class for most of the wicket component builder factories.  Override this for 
+ * highly customized builders (use GenericComponentBuilder for more standard fare).
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public abstract class BaseComponentBuilder implements WicketComponentBuilder
 {
 	private Class componentClass;
@@ -56,6 +59,31 @@ public abstract class BaseComponentBuilder implements WicketComponentBuilder
 	 * @return
 	 */
 	public abstract List getConstructorParameters(String key, Map attributes);
+	
+	static DynamicJavaWrapper wrapper;
+	
+	
+	/**
+	 * This avoids the compilation issue with java calling groovy.  Normally we'd not want
+	 * to work this hard, but we're getting maven issues.
+	 * @return
+	 */
+	public static DynamicJavaWrapper getDynamicJavaWrapper()
+	{
+		if(wrapper == null)
+		{
+			try
+			{
+				wrapper = (DynamicJavaWrapper) Class.forName("wicket.contrib.groovy.builder.DynamicJavaWrapperUtil").newInstance();
+			}
+			catch (Exception e)
+			{
+				throw new WicketComponentBuilderException("Can't get wrapper instanc");
+			}
+		}
+		
+		return wrapper;
+	}
 	
 	protected Component createComponentInstace(String key, Map attributes)
 	{
@@ -84,7 +112,7 @@ public abstract class BaseComponentBuilder implements WicketComponentBuilder
 			
 			if(closures.size() > 0 || extraCode != null)
 			{ 
-				localComponentClass = DynamicJavaWrapperUtil.wrapClass(getComponentClass(), methods, closures, injectExtraCode(), injectInterfaces());
+				localComponentClass = getDynamicJavaWrapper().wrapClass(getComponentClass(), methods, closures, injectExtraCode(), injectInterfaces());
 			}
 			else
 			{
@@ -92,12 +120,6 @@ public abstract class BaseComponentBuilder implements WicketComponentBuilder
 			}
 			
 			List constructorParameters = getConstructorParameters(key, attributes);
-			
-//			Constructor cons = getConstructor(localComponentClass, constructorParameters);
-//			if(cons != null)
-//				return (Component) cons.newInstance(constructorParameters.toArray());
-//			else
-//				throw new WicketComponentBuilderException("Constructor params don't match an available constructor");
 			
 			return (Component) ConstructorUtils.invokeConstructor(localComponentClass, constructorParameters.toArray());
 		}
@@ -129,7 +151,7 @@ public abstract class BaseComponentBuilder implements WicketComponentBuilder
 		return null;
 	}
 	
-	protected static Method matchClosuresToMethods(Class componentClass, String methodName, Closure closure)
+	public static Method matchClosuresToMethods(Class componentClass, String methodName, Closure closure)
 	{
 		//TODO: do a better type matchup.  Leave this alone for now.  Require strict types.
 		try

@@ -13,11 +13,17 @@
  */
 package wicket.contrib.groovy.builder;
 
-import java.io.Serializable;
-
+/**
+ * Generic script wrapper interface.  Initally there were two script wrapper types: closure and string
+ * expression.  The string type is being removed, so this might be pointless soon.  Should probably collapse
+ * this so that only a closure type is used directly (rather than an interface).
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public interface ScriptWrapper
 {
 
 	public abstract Object run(Object context, Object[] args);
-
+ 
 }

@@ -27,6 +27,6 @@
 	<classpathentry kind="var" path="M2_REPO/antlr/antlr/2.7.6/antlr-2.7.6.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.3/servlet-api-2.3.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-annotations/3.2.0.ga/hibernate-annotations-3.2.0.ga.jar"/>
-	<classpathentry exported="true" kind="lib" path="target/groovy-classes"/>
+	<classpathentry exported="true" kind="lib" path="target/groovy-classes2"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

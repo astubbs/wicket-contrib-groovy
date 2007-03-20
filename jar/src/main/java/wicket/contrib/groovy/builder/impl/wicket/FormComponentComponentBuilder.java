@@ -15,14 +15,17 @@ package wicket.contrib.groovy.builder.impl.wicket;
 
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
-
 
 import wicket.Component;
 import wicket.contrib.groovy.builder.util.AttributeUtils;
 import wicket.markup.html.form.FormComponent;
 
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class FormComponentComponentBuilder extends GenericComponentBuilder
 {
 
@@ -47,18 +50,10 @@ public class FormComponentComponentBuilder extends GenericComponentBuilder
 			attributes = Collections.EMPTY_MAP;
 		
 		Object label = attributes.remove("label");
-//		Object persistent = attributes.remove("persistent");
-//		Object required = attributes.remove("required");
-//		
+	
 		if(label != null)
 			formComponent.setLabel(AttributeUtils.modelValue((Serializable) label));
-		
-//		if(persistent != null)
-//			formComponent.setPersistent(AttributeUtils.booleanValue(persistent));
-//		
-//		if(required != null)
-//			formComponent.setRequired(AttributeUtils.booleanValue(required));
-//		
+
 		setOtherProperties(formComponent, attributes);
 	}
 

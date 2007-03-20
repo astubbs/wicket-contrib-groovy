@@ -13,16 +13,15 @@
  */
 package wicket.contrib.groovy.builder.impl.wicket;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
-import wicket.Component;
-import wicket.contrib.groovy.builder.BaseComponentBuilder;
-
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class AbstractSingleSelectChoiceComponentBuilder extends GenericComponentBuilder
 {
 	public AbstractSingleSelectChoiceComponentBuilder(Class componentClass)

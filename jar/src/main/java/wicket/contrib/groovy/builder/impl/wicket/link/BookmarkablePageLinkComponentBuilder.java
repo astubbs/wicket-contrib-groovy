@@ -21,7 +21,13 @@ import wicket.PageParameters;
 import wicket.contrib.groovy.builder.WicketComponentBuilderException;
 import wicket.contrib.groovy.builder.util.AttributeUtils;
 
-
+/**
+ * Parameters can be supplied as a PageParameters object, or a simple name:value map.
+ * The key should be either "params", "parameters", "pageParameters".
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class BookmarkablePageLinkComponentBuilder extends LinkComponentBuilder
 {
 	static final String[] PARAMS_NAMES = new String[]{"params", "parameters", "pageParameters"};

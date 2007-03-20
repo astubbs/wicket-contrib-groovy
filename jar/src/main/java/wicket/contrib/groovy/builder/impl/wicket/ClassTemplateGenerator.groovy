@@ -13,7 +13,12 @@
  */
 package wicket.contrib.groovy.builder.impl.wicket;
 
-
+/**
+ * TODO: This is old.  Should probably go away.
+ *
+ * @author Kevin Galligan
+ *
+ */
 class ClassTemplateGenerator {
 	
 	static Map formOverrideClasses = new HashMap();

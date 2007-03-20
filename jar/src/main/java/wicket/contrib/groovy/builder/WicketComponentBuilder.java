@@ -17,6 +17,12 @@ import java.util.Map;
 
 import wicket.Component;
 
+/**
+ * Factory for creating component instances.
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public interface WicketComponentBuilder
 {
 	public Component create(String key, Map attributes) throws Exception;

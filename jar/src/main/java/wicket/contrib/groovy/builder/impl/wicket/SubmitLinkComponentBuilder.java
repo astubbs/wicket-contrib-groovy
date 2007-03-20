@@ -17,16 +17,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import wicket.markup.html.form.Form;
-
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class SubmitLinkComponentBuilder extends FormComponentComponentBuilder
 {
 	public SubmitLinkComponentBuilder(Class componentClass)
 	{
 		super(componentClass);
 	}
-	
-	private static final Class[] CONSTRUCTOR_FORM = new Class[]{String.class, Form.class};
 	
 	public List getConstructorParameters(String key, Map attributes)
 	{

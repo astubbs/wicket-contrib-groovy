@@ -13,6 +13,12 @@
  */
 package wicket.contrib.groovy.builder;
 
+/**
+ * General exception thrown all over the place in the builder framework.
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class WicketComponentBuilderException extends RuntimeException
 {
 

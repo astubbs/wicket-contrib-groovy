@@ -15,16 +15,14 @@ package wicket.contrib.groovy.builder.impl.wicket;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-import wicket.Component;
-import wicket.contrib.groovy.builder.WicketComponentBuilderException;
-import wicket.contrib.groovy.builder.util.ListConstructors;
-
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class CheckGroupComponentBuilder extends GenericComponentBuilder
 {
 	static final public Class[] CONSTRUCTOR = new Class[]{String.class, Collection.class};

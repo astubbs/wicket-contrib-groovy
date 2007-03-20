@@ -14,9 +14,7 @@
 package wicket.contrib.groovy.builder.impl.wicket;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
-
 
 import wicket.Component;
 import wicket.contrib.groovy.builder.WicketComponentBuilderException;
@@ -24,10 +22,10 @@ import wicket.markup.html.form.FormComponent;
 import wicket.markup.html.form.FormComponentLabel;
 
 /**
- * This one is lame.  You could totally grab the current component from the context, but 
+ * This one is lame.  The builder could grab the current component from the context, but 
  * that would mess with the current plumbing.
  * 
- * @author Kevin
+ * @author Kevin Galligan
  *
  */
 public class FormComponentLabelComponentBuilder extends GenericComponentBuilder

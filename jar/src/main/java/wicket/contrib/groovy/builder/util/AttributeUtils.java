@@ -23,6 +23,12 @@ import wicket.contrib.groovy.builder.WicketComponentBuilderException;
 import wicket.model.IModel;
 import wicket.model.Model;
 
+/**
+ * Some general utilities for pulling values from the attributes map.
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class AttributeUtils
 {
 	public static boolean booleanValue(Object arg) 

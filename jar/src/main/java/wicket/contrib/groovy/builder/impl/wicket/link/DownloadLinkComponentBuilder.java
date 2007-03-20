@@ -18,10 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import wicket.PageParameters;
 import wicket.contrib.groovy.builder.WicketComponentBuilderException;
-import wicket.contrib.groovy.builder.util.AttributeUtils;
 
+/**
+ * TODO: This needs to be improved.  It can handle simple file references, but I'd
+ * also like to stream files from the war context (exploded or archived).
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class DownloadLinkComponentBuilder extends LinkComponentBuilder
 {
 

@@ -22,9 +22,9 @@ import wicket.markup.html.form.Form
 class ComponentTestsPage extends WebPage {
 
   	public ComponentTestsPage()
-  	{ 
+  	{
   		WicketBuilder builder = new WicketBuilder(page)
-		builder.form('baseForm', model:"String", onSubmit:{println "asdf"})
+		Form form = builder.form('baseForm', model:"String", onSubmit:{println "form onSubmit() called"})
 		{
   			listView('testListView', list:['asdf', 'qwert'], populateItem:
   			{
@@ -57,6 +57,7 @@ class ComponentTestsPage extends WebPage {
 			requiredTextField('requiredText')
 			
 		}
+  		
   		
 //  		builder.styleLink("styleLink", class:ComponentTestsPage.class)
   		
@@ -92,6 +93,7 @@ class ComponentTestsPage extends WebPage {
   		if(bombedOut == false)
   			throw new Exception("Noprop didn't fail")
   		
+  		form.onSubmit()
   		
   	}
   	

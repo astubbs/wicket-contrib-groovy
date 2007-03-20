@@ -13,16 +13,20 @@
  */
 package wicket.contrib.groovy.builder.impl.wicket;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 
 import wicket.Component;
 import wicket.contrib.groovy.builder.BaseComponentBuilder;
 
+/**
+ * This handles the vast majority of cases.  Override this to build customs in all
+ * but the most complex cases.
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class GenericComponentBuilder extends BaseComponentBuilder
 {
 	public GenericComponentBuilder(Class componentClass)

@@ -53,10 +53,16 @@ import wicket.markup.html.navigation.paging.PagingNavigationLink;
 import wicket.markup.html.panel.Fragment;
 import wicket.markup.html.resources.PackagedResourceReference;
 
+/**
+ * This is the big registry.  In here, the standard builder factories are registered.  
+ * This will need a major review.
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class DefaultComponentBuilderFactoryConfigurationProvider extends AbstractWicketGroovyConfiguration implements WicketGroovyConfigurationProvider{
 
 	public void augmentHelperClassHierarchy(ClassHierarchyTree tree) {
-//		tree.addSubClass(Link.class, LinkNodeHelper.class);
 		
 		tree.addSubClass(Component.class, GenericComponentBuilder.class);
 		
@@ -64,21 +70,13 @@ public class DefaultComponentBuilderFactoryConfigurationProvider extends Abstrac
 		
 		tree.addSubClass(wicket.markup.transformer.AbstractOutputTransformerContainer.class, UnimplementedComponentBuilder.class);
 		
-//		tree.addSubClass(AjaxLink.class, UnimplementedComponentBuilder.class);
-		
 		tree.addSubClass(AjaxSubmitLink.class, AjaxSubmitLinkComponentBuilder.class);
-		
-//		tree.addSubClass(CheckGroupSelector.class, CheckGroupSelectorComponentBuilder.class);
 		
 		tree.addSubClass(CheckGroup.class, CheckGroupComponentBuilder.class);
 		
 		tree.addSubClass(ExternalLink.class, ExternalLinkComponentBuilder.class);
 		
-//		tree.addSubClass(Form.class, FormComponentBuilder.class);
-		
 		tree.addSubClass(FormComponent.class, FormComponentComponentBuilder.class);
-		
-//		tree.addSubClass(Button.class, ButtonComponentBuilder.class);
 		
 		tree.addSubClass(SubmitLink.class, SubmitLinkComponentBuilder.class);
 		
@@ -131,13 +129,6 @@ public class DefaultComponentBuilderFactoryConfigurationProvider extends Abstrac
 		tree.addSubClass(Image.class, ImageComponentBuilder.class);
 		
 		tree.addSubClass(Include.class, IncludeComponentBuilder.class);
-		
-		//TODO: both check and radio button need override support, but not today
-//		tree.addSubClass(Label.class, LabelNodeHelper.class);
-//		tree.addSubClass(DropDownChoice.class, DropDownChoiceNodeHelper.class);
-//		tree.addSubClass(TextField.class, TextFieldNodeHelper.class);
-
-
 	}
 
 	public String[] componentPackageSearchList()

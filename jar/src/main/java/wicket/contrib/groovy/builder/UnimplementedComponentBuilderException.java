@@ -13,6 +13,13 @@
  */
 package wicket.contrib.groovy.builder;
 
+/**
+ * Thrown by UnimplementedComponentBuilder.  Might be a bit too specific.  A
+ * WicketComponentBuilderException would probably be just as good.
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class UnimplementedComponentBuilderException extends WicketComponentBuilderException
 {
 	public UnimplementedComponentBuilderException(String component)

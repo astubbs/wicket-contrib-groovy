@@ -18,13 +18,14 @@ import java.lang.reflect.Modifier
 import java.lang.reflect.Method
 
 /**
- * I can't figure out if this is really smart or really dumb.  The idea is to subclass
- * java objects to allow custom MetaClass proxys.  This will allow method overriding on 
- * arbitrary objects with Closure objects.  Sounds complicated, but its not really.
+ * This is a little complex.  It overrides component classes, if needed.  The overriden methods are
+ * given closures to execute when called.
+ *
+ * @author Kevin Galligan
  */
-class DynamicJavaWrapperUtil {
+class DynamicJavaWrapperUtil implements DynamicJavaWrapper {
 
-	 public static String buildConstructorOverrides(String className, Class javaClass)
+	 public String buildConstructorOverrides(String className, Class javaClass)
 	 {
 		StringBuffer code = new StringBuffer();
 		
@@ -56,7 +57,7 @@ class DynamicJavaWrapperUtil {
 		return code.toString()
 	 }
 	 
-	 public static String buildMehodOverrides(Class javaClass, List methods)
+	 public String buildMehodOverrides(Class javaClass, List methods)
 	 {
 		StringBuffer code = new StringBuffer();
 		
@@ -96,7 +97,7 @@ class DynamicJavaWrapperUtil {
 			code.append("${visibility} ${meth.returnType.name} ${meth.name}(")
 			code.append(methodParams.toString())
 			code.append("){\nObject[] args = (Object[])[" + callBuffer.toString() + "]\n")
-			code.append("def script = scriptMap.get('${meth.name}').run(this, args)\n")
+			code.append("def scriptResult = scriptMap.get('${meth.name}').run(this, args)\n")
 			code.append("}\n\n")
 			code.append("${visibility} ${meth.returnType.name} super_${meth.name}(")
 			code.append(methodParams.toString())
@@ -107,13 +108,26 @@ class DynamicJavaWrapperUtil {
 	 }
 	 static int count = 0
 	
-	public static Class wrapClass(Class javaClass, List methods, List closures)
+	public Class wrapClass(Class javaClass, List methods, List closures)
 	{
 	 	return wrapClass(javaClass, methods, closures, null, null)
 	}
 	 
-	public static Class wrapClass(Class javaClass, List methods, List closures, String extraCode, String interfaces)
+	 Map cachedClasses = [:]
+	                      
+	public Class wrapClass(Class javaClass, List methods, List closures, String extraCode, String interfaces)
 	{
+		WicketComponentOverrideDescriptor descriptor = 
+			new WicketComponentOverrideDescriptor(javaClass:javaClass, methods:methods,
+					closures:closures, extraCode:extraCode, interfaces:interfaces)
+		
+		Class componentClass = cachedClasses.get(descriptor)
+		
+		if(componentClass != null)
+		{
+			return componentClass
+		}
+		
 		 if(extraCode == null)
 			 extraCode = ""
 
@@ -154,13 +168,13 @@ class DynamicJavaWrapperUtil {
 
 return ${className}.class
 """
-		println classTemplate
+//		println classTemplate
 		
 		GroovyShell shell = new GroovyShell()
 		Class newClass = shell.evaluate(classTemplate)
 		
 		Method addScriptMethod = newClass.getMethod("addScript", (Class[])[String.class, ScriptWrapper.class])
-		
+		 
 		Object[] args = new Object[2]
 		int count = 0
 		for(meth in methods)
@@ -171,6 +185,23 @@ return ${className}.class
 			addScriptMethod.invoke(null, args)
 		}
 
+		//TODO: Test if an instance of wicket.MarkupContainer
+//		def myMetaClass = new WicketComponentMetaClass(newClass)
+//        def invoker = InvokerHelper.instance
+//        invoker.metaRegistry.setMetaClass(newClass, myMetaClass)
+
+		
+//		MetaClass newClassMeta = InvokerHelper.getInstance().getMetaRegistry().getMetaClass(newClass);
+
+//		newClassMeta.initialize()
+		
+//		newClassMeta.addMetaMethod(new org.codehaus.groovy.runtime.NewInstanceMetaMethod("get", WicketComponentMethods.class, (Class[])[String.class], wicket.Component.class, Modifier.PUBLIC))
+		
+		//Turn off cache for now.  Causes problems with stale closure owner references
+		//TODO: Update caching such that ClosureScriptWrapper instances are added to each object, not
+		//at the class level
+//		cachedClasses.put(descriptor, newClass)
+		
 		return newClass
 	}
 

@@ -18,7 +18,12 @@ package wicket.contrib.groovy.builder;
  * but you also can't have a factory method that requires the object to exist, if its
  * to create itself.  This interface is just a marker.  Make sure the class has a static
  * 'Component create(String key, Map attributes)' method.
- * @author Kevin
+ * 
+ * This is a weird construct.  I'm reviewing.  In my experience, if it feels weird early on, it won't be 
+ * there long.  Something, however, will take its place.  Custom components should have the option of
+ * generating their own instances.
+ * 
+ * @author Kevin Galligan
  *
  */
 public interface WicketComponentBuilderLocalFactory

@@ -13,32 +13,97 @@
  */
 package wicket.contrib.groovy.builder;
 
+import wicket.contrib.groovy.builder.otherpackage.ClosureScriptWrapperJavaBasedDataObject
 import java.lang.reflect.Method
+import wicket.markup.html.form.Form
 
 class ClosureScriptWrapperTest extends GroovyTestCase implements Serializable {
 
 	def classLevelTest = "beforeOnSubmit"
 
+	DataObject dataObject = new DataObject(name:"some name", someValue:1234) 
+	
+	public DataObject getDataObject()
+	{
+		println "In getDataObject"
+		return dataObject
+	}
+	
 	void testProperThisReference()
 	{
 		Method method = org.apache.commons.beanutils.MethodUtils.getAccessibleMethod(NodeTree.class, "getValue", new Class[0])
 		Method method2 = org.apache.commons.beanutils.MethodUtils.getAccessibleMethod(NodeTree.class, "getSubValue", new Class[0])
-		Closure closure = {
+		Closure closure = { return {
 			this.getTestValue()
 			super_getSubValue()
 			getTestValue()
-			doSomethingElse()
-		}
+			doSomethingElse() 
+			println dataObject.name
+		}}.call()
 		
 		Closure closure2 = { assert false }
 		
 		
-		def newTop = DynamicJavaWrapperUtil.wrapClass(NodeTree.class, 
+		def newTop = BaseComponentBuilder.getDynamicJavaWrapper().wrapClass(NodeTree.class, 
 				[method, method2], 
 				[closure, closure2]) 
 		
 		newTop.newInstance().getValue()
 	}
+	
+	void testGroovyLocalSourceObject()
+	{
+		Closure closure =  {
+			println dataObject.name
+		}
+		Method method = BaseComponentBuilder.matchClosuresToMethods(ClosureScriptWrapperGroovyLocalBasedDataObject.class, "onSomething", closure)
+		
+		
+		def newForm = BaseComponentBuilder.getDynamicJavaWrapper().wrapClass(ClosureScriptWrapperGroovyLocalBasedDataObject.class, 
+				[method], 
+				[closure]) 
+		
+		newForm.newInstance().onSomething()
+	}
+	
+	void testGroovySourceObject()
+	{	
+		Closure closure =  {
+			println dataObject.name
+		}
+		Method method = BaseComponentBuilder.matchClosuresToMethods(ClosureScriptWrapperGroovyBasedDataObject.class, "onSomething", closure)
+		
+		
+		def newForm = BaseComponentBuilder.getDynamicJavaWrapper().wrapClass(ClosureScriptWrapperGroovyBasedDataObject.class, 
+				[method], 
+				[closure]) 
+		
+		newForm.newInstance().onSomething()
+	}
+	
+//	void testJavaSourceObject()
+//	{		
+//		Closure closure =  {
+//			println dataObject.name
+//		}
+//		Class newDO = ClosureScriptWrapperJavaBasedDataObject.generateClassInJava(closure)
+//  		ClosureScriptWrapperJavaBasedDataObject javaDataObj = newDO.getConstructor((Class [])[String.class]).newInstance((Object[])['baseForm'] )
+//  		javaDataObj.onSomething()
+//	}
+//	
+//	void testFormObject()
+//	{
+//		Method method = org.apache.commons.beanutils.MethodUtils.getAccessibleMethod(Form.class, "onSubmit", new Class[0])
+//		Closure closure =  {
+//			println dataObject.name
+//		}
+//		
+//		def newForm = BaseComponentBuilder.getDynamicJavaWrapper().wrapClass(Form.class, 
+//				[method], 
+//				[closure]) 
+//		
+//		newForm.getConstructor((Class[])[String.class]).newInstance((Object [])["asdf"]).onSubmit()
+//	}
 	
 	void getValue()
 	{
@@ -75,5 +140,31 @@ class NodeTree
 	{
 		println "In getSubValue"
 		assert true;
+	}
+}
+
+class DataObject
+{
+	String name
+	int someValue
+}
+
+class ClosureScriptWrapperGroovyLocalBasedDataObject {
+
+	String someVal = "asdf";
+
+	public String getSomeVal()
+	{
+		return someVal;
+	}
+
+	public void setSomeVal(String someVal)
+	{
+		this.someVal = someVal;
+	}
+	
+	protected void onSomething()
+	{
+		System.out.println("in onSomething");
 	}
 }

@@ -13,20 +13,29 @@
  */
 package wicket.contrib.groovy.builder;
 
-import groovy.lang.Binding;
 import groovy.lang.Closure;
-import groovy.lang.GroovyShell;
 import groovy.lang.Reference;
-import groovy.lang.Script;
 
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.apache.commons.collections.map.SingletonMap;
-
+/**
+ * Takes a closure and holds on to the Class that implements the closure.  The original 
+ * purpose here was to make something that's Serializable so Wicket could deal with it.  
+ * 
+ * TODO:  There are some sticky issues where that need to be reviewed.  If somebody is
+ * a groovy/closure expert, please take a look.
+ * 
+ * Also, running this in Jetty, I was getting exceptions that the constructor for the
+ * Closure class was not serializable (something like that).  I did not, however, get
+ * that problem in tomcat.  this should be examined.
+ * 
+ * Also, I have a feeling there will be some issues in a clustered environment.  Take 
+ * a ride with that sometime.
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class ClosureScriptWrapper implements Serializable, ScriptWrapper
 {
 	static final Class[] CONSTRUCTOR = new Class[]{Object.class, Object.class};
@@ -34,7 +43,8 @@ public class ClosureScriptWrapper implements Serializable, ScriptWrapper
 	Class closureClass;
 	Serializable owner;
 	
-	transient Closure closure;
+	//Holding a reference is problematic. TODO: figure out a way to do this
+//	transient Closure closure;
 	
 	public ClosureScriptWrapper(Closure closure)
 	{
@@ -72,11 +82,11 @@ public class ClosureScriptWrapper implements Serializable, ScriptWrapper
 	 * @see wicket.contrib.groovy.builder.ScriptWrapper#run(java.lang.Object)
 	 */
 	public Object run(Object ignore, Object[] args) {
-		if(closureClass == null && closure == null)
+		if(closureClass == null)
 			return null;
 		
 		//TODO: A little ugly.  Clean up.
-		getClosure(ignore);
+		Closure closure = getClosure(ignore);
 		
 //		closure.
 		
@@ -86,21 +96,19 @@ public class ClosureScriptWrapper implements Serializable, ScriptWrapper
 
 	public Closure getClosure(Object newOwner)
 	{
-		if(closure == null || (closure.getOwner() != newOwner))
+		Closure closure;
+		try
 		{
-			System.out.println("creating new closure class instance");
-			try
-			{
-				Constructor cons = closureClass.getConstructor(CONSTRUCTOR);
-				cons.setAccessible(true);
-				closure = (Closure) cons.newInstance(new Object[]{newOwner, newOwner});
-				closure.setDelegate(owner);
-			}
-			catch (Exception e)
-			{
-				throw new WicketComponentBuilderException("Can't call closure", e);
-			}
+			Constructor cons = closureClass.getConstructor(CONSTRUCTOR);
+			cons.setAccessible(true);
+			closure = (Closure) cons.newInstance(new Object[]{newOwner, newOwner});
+			closure.setDelegate(owner);
 		}
+		catch (Exception e)
+		{
+			throw new WicketComponentBuilderException("Can't call closure", e);
+		}
+		
 		return closure;
 	}
 	

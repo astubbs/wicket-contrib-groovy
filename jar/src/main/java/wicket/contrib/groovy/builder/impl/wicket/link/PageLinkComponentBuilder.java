@@ -18,10 +18,14 @@ import java.util.List;
 import java.util.Map;
 
 import wicket.Page;
-import wicket.PageParameters;
 import wicket.contrib.groovy.builder.WicketComponentBuilderException;
 import wicket.contrib.groovy.builder.util.AttributeUtils;
 
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class PageLinkComponentBuilder extends LinkComponentBuilder
 {
 

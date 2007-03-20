@@ -20,7 +20,7 @@ import java.util.List;
  * These must exist somewhere, but I can't find them right now, and they're 
  * trivial to write, so...
  * 
- * @author Kevin
+ * @author Kevin Galligan
  *
  */
 public class ListConstructors

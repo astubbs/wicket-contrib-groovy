@@ -13,6 +13,12 @@
  */
 package wicket.contrib.groovy.builder;
 
+/**
+ * Configuration provided to the factory.
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public interface WicketGroovyConfiguration
 {
 
