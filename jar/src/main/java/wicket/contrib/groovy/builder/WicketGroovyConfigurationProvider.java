@@ -14,7 +14,8 @@
 package wicket.contrib.groovy.builder;
 
 /**
- * Convenience interface
+ * Convenience interface.
+ * 
  * @author Kevin Galligan
  *
  */

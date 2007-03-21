@@ -19,6 +19,11 @@ import net.databinder.components.DataForm;
 import net.databinder.components.DataPanel;
 import net.databinder.components.StyleLink;
 
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class DatabinderWicketGroovyConfiguration extends AbstractWicketGroovyConfiguration
 {
 	public String[] componentPackageSearchList()

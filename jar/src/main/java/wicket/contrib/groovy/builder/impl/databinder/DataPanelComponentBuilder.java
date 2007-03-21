@@ -24,6 +24,11 @@ import wicket.contrib.groovy.builder.WicketComponentBuilderException;
 import wicket.contrib.groovy.builder.util.AttributeUtils;
 import wicket.contrib.groovy.builder.util.ListConstructors;
 
+/**
+ * 
+ * @author Kevin Galligan
+ *
+ */
 public class DataPanelComponentBuilder extends BaseComponentBuilder
 {
 
