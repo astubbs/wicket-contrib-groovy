@@ -13,21 +13,30 @@
  */
 package wicket.contrib.groovy.builder.impl.wicket;
 
+import groovy.lang.IntRange;
+import groovy.lang.Range;
+
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import wicket.Component;
+import wicket.contrib.groovy.builder.WicketComponentBuilderException;
 import wicket.contrib.groovy.builder.util.AttributeUtils;
 import wicket.markup.html.form.FormComponent;
+import wicket.markup.html.form.validation.IValidator;
+import wicket.markup.html.form.validation.NumberValidator;
+import wicket.markup.html.form.validation.StringValidator;
 
 /**
  * 
  * @author Kevin Galligan
- *
+ * 
  */
 public class FormComponentComponentBuilder extends GenericComponentBuilder
 {
+	static final String[] PARAMS_NAMES = new String[] { "valid", "validator", "validators", "validatorList" };
 
 	public FormComponentComponentBuilder(Class componentClass)
 	{
@@ -38,24 +47,66 @@ public class FormComponentComponentBuilder extends GenericComponentBuilder
 	{
 		FormComponent formComponent = (FormComponent) createComponentInstace(key, attributes);
 		setFormComponentStandards(formComponent, attributes);
-		
+
 		return formComponent;
 	}
 
 	protected void setFormComponentStandards(FormComponent formComponent, Map attributes)
 	{
 		setModel(formComponent, attributes);
-		
-		if(attributes == null)
+
+		if (attributes == null)
 			attributes = Collections.EMPTY_MAP;
-		
+
 		Object label = attributes.remove("label");
-	
-		if(label != null)
+
+		if (label != null)
 			formComponent.setLabel(AttributeUtils.modelValue((Serializable) label));
 
+		//***************** VALIDATORS ***************** 
+		Object validatorObject = AttributeUtils.multiName(attributes, PARAMS_NAMES);
+
+		if (validatorObject != null)
+		{
+			if (validatorObject instanceof List)
+			{
+				List validators = (List) validatorObject;
+				for (int i = 0; i < validators.size(); i++)
+				{
+					formComponent.add((IValidator) validators.get(i));
+				}
+			}
+			else if (validatorObject instanceof IValidator)
+			{
+				formComponent.add((IValidator) validatorObject);
+			}
+			else
+			{
+				throw new WicketComponentBuilderException("validator type not recognized");
+			}
+		}
+		
+		Number min = (Number) attributes.remove("min");
+		if(min != null)
+			formComponent.add(NumberValidator.minimum(min.longValue()));
+		
+		Number max = (Number) attributes.remove("max");
+		if(max != null)
+			formComponent.add(NumberValidator.maximum(max.longValue()));
+		
+		IntRange range = AttributeUtils.intRangeValue(attributes.remove("range"));
+		if(range != null)
+			formComponent.add(NumberValidator.range(range.getFromInt(), range.getToInt()));
+		
+		Number minLength = (Number) attributes.remove("minLength");
+		if(minLength != null)
+			formComponent.add(StringValidator.minimumLength(minLength.intValue()));
+		
+		Number maxLength = (Number) attributes.remove("maxLength");
+		if(maxLength != null)
+			formComponent.add(StringValidator.maximumLength(maxLength.intValue()));
+		
 		setOtherProperties(formComponent, attributes);
 	}
 
-	
 }

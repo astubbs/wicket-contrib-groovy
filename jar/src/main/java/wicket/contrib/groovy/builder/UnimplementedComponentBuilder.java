@@ -36,7 +36,7 @@ public class UnimplementedComponentBuilder extends BaseComponentBuilder
 
 	public Component create(String key, Map attributes) throws Exception
 	{
-		throw new UnimplementedComponentBuilderException(getComponentClass().getName());
+		throw new UnimplementedComponentBuilderException(getTargetClass().getName());
 	}
 
 	/**

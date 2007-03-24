@@ -20,7 +20,7 @@ import wicket.util.tester.WicketTester
  * This isn't so much of a "test" yet.  Just building tree.  Not testing its accuracy.
  */
 class WicketBuilderTest extends GroovyTestCase {
-
+ 
 	WicketTester tester
 	
 	void setUp()

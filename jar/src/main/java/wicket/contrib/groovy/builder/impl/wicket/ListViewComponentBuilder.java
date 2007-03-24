@@ -102,5 +102,15 @@ public class ListViewComponentBuilder extends GenericComponentBuilder
 		return null;
 	}
 
+	protected void writeSimpleViewTagEnd()
+	{
+		writeViewTagText("</tr></table>\n");
+	}
+
+	protected void writeSimpleViewTagStart(String key)
+	{
+		writeViewTagText("<table><tr wicket:id='"+ key +"'>\n");
+	}
+
 	
 }

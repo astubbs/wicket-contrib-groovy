@@ -27,13 +27,18 @@ public class CompClosuresPageTestForm extends Form
 	
 	public static Class generateClassInJava(Closure closure)
 	{
-		Method method = BaseComponentBuilder.matchClosuresToMethods(CompClosuresPageTestForm.class, "onTestEvent", closure);
+		Method method = BuilderSupport.matchClosuresToMethods(CompClosuresPageTestForm.class, "onTestEvent", closure);
   		
-		Class awesome = BaseComponentBuilder.getDynamicJavaWrapper()
-				.wrapClass(CompClosuresPageTestForm.class, ListConstructors.newList(method), ListConstructors.newList(closure), null, null);
+		Class awesome = BuilderSupport.getDynamicJavaWrapper()
+				.wrapClass(CompClosuresPageTestForm.class, ListConstructors.newList(method), null, null);
 		
 		return awesome;
 	}
 	
+	public static void fillMethodsOnInstance(Closure closure, DynamicJavaWrapperScriptable scriptable)
+	{
+		Method method = BuilderSupport.matchClosuresToMethods(CompClosuresPageTestForm.class, "onTestEvent", closure);
 
+		BuilderSupport.getDynamicJavaWrapper().fillMethods(scriptable, ListConstructors.newList(method), ListConstructors.newList(closure));
+	}
 }

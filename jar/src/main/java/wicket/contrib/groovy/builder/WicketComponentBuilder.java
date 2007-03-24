@@ -26,4 +26,28 @@ import wicket.Component;
 public interface WicketComponentBuilder
 {
 	public Component create(String key, Map attributes) throws Exception;
+	
+	/**
+	 * This is for convenience.  Only called in development mode.  It should 
+	 * write the code to the console, which can be used for debugging and for
+	 * cut/paste of html code.
+	 * 
+	 * This is the start tag.  If this is not containing other Components, you would 
+	 * only need to imeplement one or the other.
+	 * 
+	 * @param text
+	 */
+	public void writeViewTagStart(StringBuilder text);
+	
+	/**
+	 * This is for convenience.  Only called in development mode.  It should 
+	 * write the code to the console, which can be used for debugging and for
+	 * cut/paste of html code.
+	 * 
+	 * This is the start tag.  If this is not containing other Components, you would 
+	 * only need to imeplement one or the other.
+	 * 
+	 * @param text
+	 */
+	public void writeViewTagEnd(StringBuilder text);
 }

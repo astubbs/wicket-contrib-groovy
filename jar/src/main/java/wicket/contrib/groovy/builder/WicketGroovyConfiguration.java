@@ -13,6 +13,8 @@
  */
 package wicket.contrib.groovy.builder;
 
+import java.util.Map;
+
 /**
  * Configuration provided to the factory.
  * 
@@ -36,4 +38,10 @@ public interface WicketGroovyConfiguration
 	 */
 	public abstract void augmentHelperClassHierarchy(ClassHierarchyTree tree);
 
+	/**
+	 * Add model, behavior, and validator producers.
+	 * 
+	 * @param componentAccessMap
+	 */
+	public abstract void addComponentAccentDefinitions(Map componentAccentMap);
 }

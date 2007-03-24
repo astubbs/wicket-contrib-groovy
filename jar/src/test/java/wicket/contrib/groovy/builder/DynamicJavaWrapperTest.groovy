@@ -17,51 +17,66 @@ import org.codehaus.groovy.runtime.InvokerHelper
 class DynamicJavaWrapperTest extends GroovyTestCase implements Serializable {
 
 	def classLevelTest = "beforeOnSubmit"
-	void setUp()
-	{
-		WicketComponentOverrideDescriptor desc = getDescriptor()
-		
-		Class groovyFormClass = BaseComponentBuilder.getDynamicJavaWrapper().wrapClass(desc.javaClass, desc.methods, desc.closures)
-		
-		def newForm = groovyFormClass.getConstructor((Class[])[String.class]).newInstance((Object[])["newForm"])
-		
-		newForm.onSubmit()
-	}
-	
-	WicketComponentOverrideDescriptor getDescriptor()
+
+	private WicketComponentOverrideDescriptor generateDescriptor(closure)
 	{
 		Class form = SomeClass.class
 		
-		def closure = {classLevelTest = "afterOnSubmit"}
-		def method = BaseComponentBuilder.matchClosuresToMethods(form, "onSubmit", closure)
+		def method = BuilderSupport.matchClosuresToMethods(form, "onSubmit", closure)
 		
 		WicketComponentOverrideDescriptor descriptor = 
-			new WicketComponentOverrideDescriptor(javaClass:SomeClass.class, methods:[BaseComponentBuilder.matchClosuresToMethods(form, "onSubmit", closure)],
-					closures:[{classLevelTest = "afterOnSubmit"}], extraCode:null, interfaces:null)
+			new WicketComponentOverrideDescriptor(javaClass:SomeClass.class, methods:[method], extraCode:null, interfaces:null)
 		
 		return descriptor
 	}
 	
 	void testDynamicWrapping() {
+		Closure closure = {classLevelTest = "afterOnSubmit"}
 		
+		WicketComponentOverrideDescriptor desc = generateDescriptor(closure)
+		
+		Class groovyFormClass = BuilderSupport.getDynamicJavaWrapper().wrapClass(desc.javaClass, desc.methods)
+		
+		def newForm = groovyFormClass.getConstructor((Class[])[String.class]).newInstance((Object[])["newForm"])
+		
+		BuilderSupport.getDynamicJavaWrapper().fillMethods(newForm, desc.methods, [closure])
+		
+		newForm.onSubmit()
 		
 		assertEquals classLevelTest, "afterOnSubmit"
 	}
 	
+	void testCacheDifference()
+	{
+		Closure closure = {classLevelTest = "afterSecond"}
+		
+		WicketComponentOverrideDescriptor desc = generateDescriptor(closure)
+			
+		Class groovyFormClass = BuilderSupport.getDynamicJavaWrapper().wrapClass(desc.javaClass, desc.methods)
+		
+		def newForm = groovyFormClass.getConstructor((Class[])[String.class]).newInstance((Object[])["newForm"])
+		
+		BuilderSupport.getDynamicJavaWrapper().fillMethods(newForm, desc.methods, [closure])
+		
+		newForm.onSubmit()
+	
+		assertEquals classLevelTest, "afterSecond"
+	}
+	
 	//Cache disabled for now.  Problems with old owner references
-//	void testDynamicClassCache()
-//	{
-//		WicketComponentOverrideDescriptor desc1 = getDescriptor()
-//		WicketComponentOverrideDescriptor desc2 = getDescriptor()
-//		
-//		assert desc1.equals(desc2)
-//		assertEquals desc1.hashCode(), desc2.hashCode()
-//		
-//		Map cachedClasses =  BaseComponentBuilder.getDynamicJavaWrapper().cachedClasses
-//		Class componentClass = cachedClasses.get(getDescriptor()) 
-//		
-//		assert componentClass != null
-//	}
+	void testDynamicClassCache()
+	{
+		WicketComponentOverrideDescriptor desc1 = generateDescriptor({classLevelTest = "step1"})
+		WicketComponentOverrideDescriptor desc2 = generateDescriptor({classLevelTest = "step2"})
+		
+		assert desc1.equals(desc2)
+		assertEquals desc1.hashCode(), desc2.hashCode()
+		
+		Map cachedClasses =  BuilderSupport.getDynamicJavaWrapper().cachedClasses
+		Class componentClass = cachedClasses.get(generateDescriptor({classLevelTest = "somethingElse"})) 
+		
+		assert componentClass != null
+	}
 }
 
 class SomeClass

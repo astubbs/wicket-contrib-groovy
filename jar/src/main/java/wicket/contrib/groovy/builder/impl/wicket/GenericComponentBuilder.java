@@ -19,13 +19,15 @@ import java.util.Map;
 
 import wicket.Component;
 import wicket.contrib.groovy.builder.BaseComponentBuilder;
+import wicket.markup.html.basic.Label;
+import wicket.markup.html.form.Form;
 
 /**
- * This handles the vast majority of cases.  Override this to build customs in all
- * but the most complex cases.
+ * This handles the vast majority of cases. Override this to build customs in
+ * all but the most complex cases.
  * 
  * @author Kevin Galligan
- *
+ * 
  */
 public class GenericComponentBuilder extends BaseComponentBuilder
 {
@@ -38,10 +40,43 @@ public class GenericComponentBuilder extends BaseComponentBuilder
 	{
 		Component component = createComponentInstace(key, attributes);
 		setModel(component, attributes);
-		
+
 		setOtherProperties(component, attributes);
-		
+
 		return component;
+	}
+
+	/**
+	 * Override for simple writing
+	 * @param key
+	 */
+	protected void writeSimpleViewTagStart(String key)
+	{
+		if (Form.class.isAssignableFrom(getTargetClass()))
+		{
+			writeViewTagText("<form wicket:id='" + key + "'>\n");
+		}
+		else if(Label.class.isAssignableFrom(getTargetClass()))
+		{
+			writeViewTagText("<span wicket:id='" + key + "'></span>\n");
+		}
+	}
+	
+	protected void writeSimpleViewTagEnd()
+	{
+		if (isViewTagWriter())
+		{
+			if (Form.class.isAssignableFrom(getTargetClass()))
+			{
+				writeViewTagText("</form>\n");
+			}
+		}
+	}
+
+	public void writeViewTagEnd(StringBuilder text)
+	{
+		writeSimpleViewTagEnd();
+		super.writeViewTagEnd(text);
 	}
 
 	public List getConstructorParameters(String key, Map attributes)
@@ -50,4 +85,5 @@ public class GenericComponentBuilder extends BaseComponentBuilder
 		retList.add(key);
 		return retList;
 	}
+
 }

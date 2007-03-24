@@ -48,6 +48,7 @@ public class WicketComponentBuilderFactory {
 	
 	static Map localPackageNameHelperMappingMap = new HashMap();
 	
+	
 	protected static WicketComponentBuilder checkLocalPackage(String name, MarkupContainer context)
 	{
 		Map localPackageNameHelperMapping = (Map) localPackageNameHelperMappingMap.get(context.getClass().getPackage().getName());
@@ -112,7 +113,8 @@ public class WicketComponentBuilderFactory {
 			}
 			
 			if(componentClass == null)
-				throw new UnsupportedOperationException("Can't find type '"+ name +"'");
+				return null;
+//				throw new UnsupportedOperationException("Can't find type '"+ name +"'");
 		}
 		
 		Method localBuilder = null;
@@ -145,6 +147,12 @@ public class WicketComponentBuilderFactory {
 	
 	static ClassHierarchyTree helperTree = new ClassHierarchyTree();
 	static List configurationProviders = new ArrayList();
+	static Map componentAccentMap = new HashMap();
+	
+	public static Object getComponentAccentForName(String name)
+	{
+		return componentAccentMap.get(name);
+	}
 	
 	static
 	{
@@ -155,6 +163,8 @@ public class WicketComponentBuilderFactory {
 	{
 		configurationProviders.add(provider);
 		provider.getConfiguration().augmentHelperClassHierarchy(helperTree);
+		provider.getConfiguration().addComponentAccentDefinitions(componentAccentMap);
+		
 		String[] packageList = provider.getConfiguration().componentPackageSearchList();
 		if(packageList != null)
 			Collections.addAll(searchPackageList, packageList);

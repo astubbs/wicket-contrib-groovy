@@ -1,5 +1,7 @@
 package wicket.contrib.examples.groovy.builder;
 
+import java.io.IOException;
+
 import wicket.markup.html.form.Form;
 
 /**
@@ -34,5 +36,10 @@ public class NewForm extends Form
 	protected void onSubmit()
 	{
 		System.out.println("onSubmit called");
+	}
+	
+	public void doSomething() throws IOException
+	{
+		throw new IOException("Just checking");
 	}
 }

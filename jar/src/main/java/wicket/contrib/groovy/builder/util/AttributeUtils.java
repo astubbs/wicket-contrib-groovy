@@ -13,11 +13,14 @@
  */
 package wicket.contrib.groovy.builder.util;
 
+import groovy.lang.IntRange;
+
 import java.io.Serializable;
 import java.util.Map;
 
 
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang.StringUtils;
 
 import wicket.contrib.groovy.builder.WicketComponentBuilderException;
 import wicket.model.IModel;
@@ -47,6 +50,16 @@ public class AttributeUtils
 			return new Model(arg);
 	}
 	
+	public static IntRange intRangeValue(Object arg)
+	{
+		if(arg == null)
+			return null;
+		if(arg instanceof IntRange)
+			return (IntRange)arg;
+		else
+			throw new WicketComponentBuilderException("Range must be of type IntRange");
+	}
+	
 	public static Class classValue(Object arg) throws ClassNotFoundException
 	{
 		if(arg instanceof Class)
@@ -55,6 +68,18 @@ public class AttributeUtils
 			return Class.forName((String)arg);
 		else
 			throw new WicketComponentBuilderException("Can't figure out Class type");
+	}
+	
+	public static Class classValueSafe(Object arg)
+	{
+		try
+		{
+			return classValue(arg);
+		}
+		catch (ClassNotFoundException e)
+		{
+			throw new WicketComponentBuilderException("Can't get Class value", e);
+		}
 	}
 	
 	public static Object multiName(Map attrs, String[] names)
@@ -68,6 +93,20 @@ public class AttributeUtils
 		}
 		
 		return null;
+	}
+	
+	public static Object multiNameOptional(Map attrs, String[] names)
+	{
+		return multiName(attrs, names);
+	}
+	
+	public static Object multiNameRequired(Map attrs, String[] names)
+	{
+		Object value = multiName(attrs, names);
+		if(value == null)
+			throw new WicketComponentBuilderException("One of "+ StringUtils.join(names, ',') +" required");
+		
+		return value;
 	}
 	
 	public static Object generalAttributeConversion(Class expectedType, Object value)

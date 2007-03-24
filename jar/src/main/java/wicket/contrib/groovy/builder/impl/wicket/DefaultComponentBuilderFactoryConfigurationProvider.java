@@ -13,6 +13,8 @@
  */
 package wicket.contrib.groovy.builder.impl.wicket;
 
+import java.util.Map;
+
 import wicket.Component;
 import wicket.ajax.markup.html.form.AjaxSubmitButton;
 import wicket.ajax.markup.html.form.AjaxSubmitLink;
@@ -25,6 +27,9 @@ import wicket.contrib.groovy.builder.impl.wicket.link.BookmarkablePageLinkCompon
 import wicket.contrib.groovy.builder.impl.wicket.link.DownloadLinkComponentBuilder;
 import wicket.contrib.groovy.builder.impl.wicket.link.LinkComponentBuilder;
 import wicket.contrib.groovy.builder.impl.wicket.link.PageLinkComponentBuilder;
+import wicket.contrib.groovy.builder.impl.wicket.model.GenericModelBuilder;
+import wicket.contrib.groovy.builder.impl.wicket.model.ModelModelBuilder;
+import wicket.contrib.groovy.builder.impl.wicket.model.PropertyModelModelBuilder;
 import wicket.markup.html.form.CheckGroup;
 import wicket.markup.html.form.DropDownChoice;
 import wicket.markup.html.form.FormComponent;
@@ -52,6 +57,10 @@ import wicket.markup.html.navigation.paging.PagingNavigationIncrementLink;
 import wicket.markup.html.navigation.paging.PagingNavigationLink;
 import wicket.markup.html.panel.Fragment;
 import wicket.markup.html.resources.PackagedResourceReference;
+import wicket.model.AbstractModel;
+import wicket.model.AbstractReadOnlyModel;
+import wicket.model.Model;
+import wicket.model.PropertyModel;
 
 /**
  * This is the big registry.  In here, the standard builder factories are registered.  
@@ -139,6 +148,15 @@ public class DefaultComponentBuilderFactoryConfigurationProvider extends Abstrac
 	public WicketGroovyConfiguration getConfiguration()
 	{
 		return this;
+	}
+
+	public void addComponentAccentDefinitions(Map componentAccentMap)
+	{
+		componentAccentMap.put("model", new ModelModelBuilder(Model.class));
+		componentAccentMap.put("propertyModel", new PropertyModelModelBuilder(PropertyModel.class));
+		componentAccentMap.put("abstractModel", new GenericModelBuilder(AbstractModel.class));
+		componentAccentMap.put("abstractReadOnlyModel", new GenericModelBuilder(AbstractReadOnlyModel.class));
+		
 	}
 
 }

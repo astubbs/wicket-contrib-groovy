@@ -47,7 +47,7 @@ public class FormComponentLabelComponentBuilder extends GenericComponentBuilder
 			throw new WicketComponentBuilderException("FormComponentLabel requires a formComponent argument");
 		}
 		
-		FormComponentLabel label = (FormComponentLabel) getComponentClass().getConstructor(CONSTRUCTOR_FC).newInstance(new Object[]{key, attributes.get("formComponent")});		
+		FormComponentLabel label = (FormComponentLabel) getTargetClass().getConstructor(CONSTRUCTOR_FC).newInstance(new Object[]{key, attributes.get("formComponent")});		
 		
 		return label;
 	}

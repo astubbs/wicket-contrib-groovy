@@ -13,7 +13,7 @@
  */
 package wicket.contrib.groovy.builder;
 
-import wicket.contrib.groovy.builder.otherpackage.ClosureScriptWrapperJavaBasedDataObject
+
 import java.lang.reflect.Method
 import wicket.markup.html.form.Form
 
@@ -44,7 +44,7 @@ class ClosureScriptWrapperTest extends GroovyTestCase implements Serializable {
 		Closure closure2 = { assert false }
 		
 		
-		def newTop = BaseComponentBuilder.getDynamicJavaWrapper().wrapClass(NodeTree.class, 
+		def newTop = BuilderSupport.getDynamicJavaWrapper().wrapClass(NodeTree.class, 
 				[method, method2], 
 				[closure, closure2]) 
 		
@@ -56,10 +56,10 @@ class ClosureScriptWrapperTest extends GroovyTestCase implements Serializable {
 		Closure closure =  {
 			println dataObject.name
 		}
-		Method method = BaseComponentBuilder.matchClosuresToMethods(ClosureScriptWrapperGroovyLocalBasedDataObject.class, "onSomething", closure)
+		Method method = BuilderSupport.matchClosuresToMethods(ClosureScriptWrapperGroovyLocalBasedDataObject.class, "onSomething", closure)
 		
 		
-		def newForm = BaseComponentBuilder.getDynamicJavaWrapper().wrapClass(ClosureScriptWrapperGroovyLocalBasedDataObject.class, 
+		def newForm = BuilderSupport.getDynamicJavaWrapper().wrapClass(ClosureScriptWrapperGroovyLocalBasedDataObject.class, 
 				[method], 
 				[closure]) 
 		
@@ -71,10 +71,10 @@ class ClosureScriptWrapperTest extends GroovyTestCase implements Serializable {
 		Closure closure =  {
 			println dataObject.name
 		}
-		Method method = BaseComponentBuilder.matchClosuresToMethods(ClosureScriptWrapperGroovyBasedDataObject.class, "onSomething", closure)
+		Method method = BuilderSupport.matchClosuresToMethods(ClosureScriptWrapperGroovyBasedDataObject.class, "onSomething", closure)
 		
 		
-		def newForm = BaseComponentBuilder.getDynamicJavaWrapper().wrapClass(ClosureScriptWrapperGroovyBasedDataObject.class, 
+		def newForm = BuilderSupport.getDynamicJavaWrapper().wrapClass(ClosureScriptWrapperGroovyBasedDataObject.class, 
 				[method], 
 				[closure]) 
 		
@@ -98,7 +98,7 @@ class ClosureScriptWrapperTest extends GroovyTestCase implements Serializable {
 //			println dataObject.name
 //		}
 //		
-//		def newForm = BaseComponentBuilder.getDynamicJavaWrapper().wrapClass(Form.class, 
+//		def newForm = BuilderSupport.getDynamicJavaWrapper().wrapClass(Form.class, 
 //				[method], 
 //				[closure]) 
 //		

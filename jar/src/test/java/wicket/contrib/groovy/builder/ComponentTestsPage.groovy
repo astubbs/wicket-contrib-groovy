@@ -17,10 +17,12 @@ import wicket.markup.html.WebPage
 import wicket.markup.html.basic.Label
 import wicket.model.Model
 import wicket.markup.html.form.Form
-
+import wicket.markup.html.form.validation.StringValidator
 
 class ComponentTestsPage extends WebPage {
 
+	String valForPropertyModel = "propertyModelVal"
+	
   	public ComponentTestsPage()
   	{
   		WicketBuilder builder = new WicketBuilder(page)
@@ -37,9 +39,14 @@ class ComponentTestsPage extends WebPage {
 			{
 				checkGroupSelector('testCheckGroupSelector')
 			}
+  			
+  			label("testingTemplateWriter", model:"Heyo")
 			
 			customComponent('customComponent')
 			initLink('initLink', testName:'Steve', testDate:new Date(), testInt:1248)
+			{
+  				label("initLinkLabel", model:"init link label")
+			}
 			
 			//externalLink('extLink') fails
 			externalLink('extLink1', href:"http://www.cnn.com/")
@@ -51,8 +58,11 @@ class ComponentTestsPage extends WebPage {
 			button('onSubmitButton', onSubmit:{println "onSubmitButton"})
 			
 			textField('textField')
-			textField('integerField', type:Integer)
-			textField('integerField2', type:"java.lang.Integer")
+			textField('validTextField', valid:StringValidator.maximumLength(128))
+			textField('validTextField2', maxLength:128)
+			
+			textField('integerField', type:Integer, min:2, max:20)
+			textField('integerField2', type:"java.lang.Integer", range:1..200)
 			passwordTextField('passwordText')
 			requiredTextField('requiredText')
 			
@@ -61,9 +71,30 @@ class ComponentTestsPage extends WebPage {
   		
 //  		builder.styleLink("styleLink", class:ComponentTestsPage.class)
   		
+  		
   		builder.form('baseForm2')
 		{
+			label("testModelChild")
+			{
+				model("Someval")
+			}
 			
+			label("testModelChildWithOverride")
+			{
+				model(
+					getObject:
+					{
+						println "In getObject"
+						"SomeOtherval"
+					}
+				)
+						
+			}
+			
+			label("testPropertyModel")
+			{
+				propertyModel(this, exp:"valForPropertyModel")
+			}
 		}
   		
   		builder.form('baseForm3', model:new Model("modelConstructor"))
@@ -95,6 +126,7 @@ class ComponentTestsPage extends WebPage {
   		
   		form.onSubmit()
   		
+  		println builder.getTagTemplate()
   	}
   	
   	

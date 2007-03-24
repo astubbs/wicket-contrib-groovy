@@ -13,6 +13,8 @@
  */
 package wicket.contrib.groovy.builder.impl.databinder;
 
+import java.util.Map;
+
 import wicket.contrib.groovy.builder.AbstractWicketGroovyConfiguration;
 import wicket.contrib.groovy.builder.ClassHierarchyTree;
 import net.databinder.components.DataForm;
@@ -36,5 +38,11 @@ public class DatabinderWicketGroovyConfiguration extends AbstractWicketGroovyCon
 		tree.addSubClass(StyleLink.class, StyleLinkComponentBuilder.class);
 		tree.addSubClass(DataForm.class, DataFormComponentBuilder.class);
 		tree.addSubClass(DataPanel.class, DataPanelComponentBuilder.class);
+	}
+
+	public void addComponentAccentDefinitions(Map componentAccessMap)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

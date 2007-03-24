@@ -108,23 +108,24 @@ class DynamicJavaWrapperUtil implements DynamicJavaWrapper {
 	 }
 	 static int count = 0
 	
-	public Class wrapClass(Class javaClass, List methods, List closures)
+	public Class wrapClass(Class javaClass, List methods)
 	{
-	 	return wrapClass(javaClass, methods, closures, null, null)
+	 	return wrapClass(javaClass, methods, null, null)
 	}
 	 
 	 Map cachedClasses = [:]
 	                      
-	public Class wrapClass(Class javaClass, List methods, List closures, String extraCode, String interfaces)
+	public Class wrapClass(Class javaClass, List methods, String extraCode, String interfaces)
 	{
 		WicketComponentOverrideDescriptor descriptor = 
 			new WicketComponentOverrideDescriptor(javaClass:javaClass, methods:methods,
-					closures:closures, extraCode:extraCode, interfaces:interfaces)
+					 extraCode:extraCode, interfaces:interfaces)
 		
 		Class componentClass = cachedClasses.get(descriptor)
 		
 		if(componentClass != null)
 		{
+			println "pulled from cache"
 			return componentClass
 		}
 		
@@ -134,7 +135,7 @@ class DynamicJavaWrapperUtil implements DynamicJavaWrapper {
 		if(interfaces == null)
 			interfaces = ""
 		else
-			interfaces = "implements "+ interfaces
+			interfaces = ", "+ interfaces
 			
 		Class baseClass = javaClass
 		
@@ -144,19 +145,20 @@ class DynamicJavaWrapperUtil implements DynamicJavaWrapper {
 		
 		String constructors = buildConstructorOverrides(className, javaClass)
 		String methodsString = buildMehodOverrides(javaClass, methods)
-		
+		 
 		String classTemplate = """
 	import wicket.contrib.groovy.builder.ScriptWrapper
+	import wicket.contrib.groovy.builder.DynamicJavaWrapperScriptable
 	import java.lang.reflect.Method
 	import java.lang.reflect.Modifier
 	
-	public class ${className} extends ${baseClass.name} ${interfaces}{
+	public class ${className} extends ${baseClass.name} implements DynamicJavaWrapperScriptable ${interfaces}{
 
 	${constructors}
 
-	static Map scriptMap = [:]
+	Map scriptMap = [:]
 	
-	public static void addScript(String methodName, ScriptWrapper wrapper)
+	public void addScript(String methodName, ScriptWrapper wrapper)
 	{
 		scriptMap.put(methodName, wrapper)
 	}
@@ -173,36 +175,23 @@ return ${className}.class
 		GroovyShell shell = new GroovyShell()
 		Class newClass = shell.evaluate(classTemplate)
 		
-		Method addScriptMethod = newClass.getMethod("addScript", (Class[])[String.class, ScriptWrapper.class])
-		 
-		Object[] args = new Object[2]
-		int count = 0
-		for(meth in methods)
-		{
-			args[0] = meth.name
-			args[1] = new ClosureScriptWrapper(closures[count++])
-			                   
-			addScriptMethod.invoke(null, args)
-		}
 
-		//TODO: Test if an instance of wicket.MarkupContainer
-//		def myMetaClass = new WicketComponentMetaClass(newClass)
-//        def invoker = InvokerHelper.instance
-//        invoker.metaRegistry.setMetaClass(newClass, myMetaClass)
-
-		
-//		MetaClass newClassMeta = InvokerHelper.getInstance().getMetaRegistry().getMetaClass(newClass);
-
-//		newClassMeta.initialize()
-		
-//		newClassMeta.addMetaMethod(new org.codehaus.groovy.runtime.NewInstanceMetaMethod("get", WicketComponentMethods.class, (Class[])[String.class], wicket.Component.class, Modifier.PUBLIC))
-		
 		//Turn off cache for now.  Causes problems with stale closure owner references
 		//TODO: Update caching such that ClosureScriptWrapper instances are added to each object, not
 		//at the class level
-//		cachedClasses.put(descriptor, newClass)
+		cachedClasses.put(descriptor, newClass)
 		
 		return newClass
 	}
 
+	 public void fillMethods(DynamicJavaWrapperScriptable scriptable, List methods, List closures)
+	 {
+		 for(i in 0..<closures.size())
+		{
+			Closure closure = (Closure) closures.get(i);
+			Method method = (Method) methods.get(i);
+			
+			scriptable.addScript(method.getName(), new ClosureScriptWrapper(closure));
+		}
+	 }
 }

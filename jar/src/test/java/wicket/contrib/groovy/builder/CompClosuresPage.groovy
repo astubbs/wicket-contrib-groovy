@@ -18,7 +18,6 @@ import wicket.markup.html.basic.Label
 import wicket.model.*
 import java.lang.reflect.Method
 import wicket.markup.html.form.Form
-import wicket.contrib.groovy.builder.otherpackage.ClosureScriptWrapperJavaBasedDataObject
 
 class CompClosuresPage extends WebPage {
 
@@ -45,6 +44,9 @@ class CompClosuresPage extends WebPage {
 
 		Class newFormClass = CompClosuresPageTestForm.generateClassInJava(testClosure)
 		Form form = newFormClass.getConstructor((Class [])[String.class]).newInstance((Object[])['baseForm'] )
+		
+		CompClosuresPageTestForm.fillMethodsOnInstance(testClosure, form)
+		
 		form.setModel(new CompoundPropertyModel(someData))
   		form.onTestEvent()
   		
@@ -52,23 +54,23 @@ class CompClosuresPage extends WebPage {
   		
   		println "qwert"
   	}
-  	
-  	private ClosureScriptWrapperJavaBasedDataObject getJavaDataObject(Closure closure)
-  	{
+//  	
+//  	private ClosureScriptWrapperJavaBasedDataObject getJavaDataObject(Closure closure)
+//  	{
 //  		Closure closure =  {
 //  				println someData.name
 //  			}
-  		Method method = BaseComponentBuilder.matchClosuresToMethods(ClosureScriptWrapperJavaBasedDataObject.class, "onSomething", closure)
-  			
-  			
-  		def newDO = BaseComponentBuilder.getDynamicJavaWrapper().wrapClass(ClosureScriptWrapperJavaBasedDataObject.class, 
-  				[method], 
-  				[closure]) 
-  		
+//  		Method method = BuilderSupport.matchClosuresToMethods(ClosureScriptWrapperJavaBasedDataObject.class, "onSomething", closure)
+//  			
+//  			
+//  		def newDO = BuilderSupport.getDynamicJavaWrapper().wrapClass(ClosureScriptWrapperJavaBasedDataObject.class, 
+//  				[method], 
+//  				[closure]) 
+//  		
 //		Class newDO = ClosureScriptWrapperJavaBasedDataObject.generateClassInJava(closure)
-  		return newDO.newInstance()
-  	}
-  	
+//  		return newDO.newInstance()
+//  	}
+//  	
 }
 
 class SomeData

@@ -43,4 +43,14 @@ public class CustomComponentBuilder implements WicketComponentBuilder
 	{
 		return new CustomComponent(key, new Date());
 	}
+	
+	public void writeViewTagEnd(StringBuilder text)
+	{
+		
+	}
+
+	public void writeViewTagStart(StringBuilder text)
+	{
+		
+	}
 }

@@ -41,6 +41,17 @@ public class LinkComponentBuilder extends GenericComponentBuilder
 		super(componentClass);
 	}
 
+	protected void writeSimpleViewTagStart(String key)
+	{
+		writeViewTagText("<a href='#' wicket:id='"+ key +"'>\n");
+	}
+	
+	protected void writeSimpleViewTagEnd()
+	{
+		writeViewTagText("</a>\n");
+	}
+
+
 	/**
 	 * Override this to provide a little shorthand for links.  If 'label' is provided, 
 	 * a label component is added under the link, with 'label' as the key.
@@ -62,6 +73,8 @@ public class LinkComponentBuilder extends GenericComponentBuilder
 			
 			((MarkupContainer)component).add(labelComp);
 			
+			if(isViewTagWriter())
+				writeViewTagText("<span wicket:id='"+ label +"'></span>");
 		}
 		
 		

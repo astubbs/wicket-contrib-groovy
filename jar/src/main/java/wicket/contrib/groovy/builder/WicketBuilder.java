@@ -20,11 +20,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import wicket.Application;
 import wicket.Component;
 import wicket.MarkupContainer;
 import wicket.behavior.IBehavior;
 import wicket.markup.html.form.FormComponent;
 import wicket.markup.html.form.validation.IValidator;
+import wicket.model.IModel;
 
 /**
  * This is the core class.  It takes a MarkupContainer as a context, and adds anything called to that.
@@ -43,42 +45,143 @@ public class WicketBuilder extends BuilderSupport {
 	
 	MarkupContainer context;
 
+	boolean developmentMode = false;
+	
 	public WicketBuilder(MarkupContainer context) {
 		this.context = context;
 		setCurrent(context);
-	}
-
-	protected Object createNode(Object name, Map atts, Object value) {
-		String sName = (String) name;
-		String key = (String)value;
 		
 		try
 		{
-			WicketComponentBuilder helper = WicketComponentBuilderFactory.generateComponentBuilder(sName, context);
-			
-			if(atts == null)
-				atts = Collections.EMPTY_MAP;
-			
-			Component result = helper.create(key, atts);
-			
-			if(result instanceof WicketComponentInitNotifier)
-				((WicketComponentInitNotifier)result).init();
-			
-			return result;
+			developmentMode = context.getApplication().getConfigurationType().equals(Application.DEVELOPMENT);
 		}
-		catch(RuntimeException e)
+		catch (Exception e)
 		{
-			throw e;
-		}
-		catch(Exception e)
+			//Not a problem.
+		}		
+	}
+	
+	public StringBuilder getTagTemplate()
+	{
+		return tagTemplate;
+	}
+
+	StringBuilder tagTemplate = new StringBuilder();
+	
+	//This is pretty hacky.  Should refactor the general layout at some point
+	Map generatedComponentBuilderCache = new HashMap();
+	
+	protected void nodeCompleted(Object parent, Object node)
+	{
+		if(node instanceof Component)
 		{
-			throw new RuntimeException("Error with the builder", e);
+			if (parent instanceof MarkupContainer) {
+				MarkupContainer containerParent = (MarkupContainer) parent;
+				Component componentChild = (Component) node;
+	
+				containerParent.add(componentChild);
+			}
+			
+			WicketComponentBuilder helper = (WicketComponentBuilder) generatedComponentBuilderCache.get(node);
+			
+			if(developmentMode)
+				helper.writeViewTagEnd(tagTemplate);
 		}
+		else if(node instanceof IModel)
+		{
+			((Component)parent).setModel((IModel)node);
+		}
+		else if(node instanceof IBehavior)
+		{
+			((Component)parent).add((IBehavior)node);
+		}
+		else if(node instanceof IValidator && parent instanceof FormComponent)
+		{
+			((FormComponent)parent).add((IValidator)node);
+		}
+	}
+	
+	protected Object createNode(Object name, Map atts, Object value) {
+		String sName = (String) name;
+		
+		//Assume component if of type String
+		if(value instanceof String)
+		{
+			String key = (String)value;
+			
+			try
+			{
+				WicketComponentBuilder helper = WicketComponentBuilderFactory.generateComponentBuilder(sName, context);
+				
+				//If not found, try the other guys
+				if(helper != null)
+				{
+					if(atts == null)
+						atts = Collections.EMPTY_MAP;
+					
+					if(developmentMode)
+						helper.writeViewTagStart(tagTemplate);
+					
+					Component result = helper.create(key, atts);
+					
+					if(result instanceof WicketComponentInitNotifier)
+						((WicketComponentInitNotifier)result).init();
+					
+					generatedComponentBuilderCache.put(result, helper);
+					
+					return result;
+				}
+			}
+			catch(RuntimeException e)
+			{
+				throw e;
+			}
+			catch(Exception e)
+			{
+				throw new RuntimeException("Error with the builder", e);
+			}
+		}
+		
+		Object builderObj = WicketComponentBuilderFactory.getComponentAccentForName(sName);
+		
+		if(builderObj == null)
+			throw new WicketComponentBuilderException("Builder for name '"+ sName +" not found");
+		
+		return handleMultiTypeBuilder(builderObj, sName, value, atts);
 	}
 
 	protected Object createNode(Object name, Map atts) {
+		String sName = (String) name;
+		Object builderObj = WicketComponentBuilderFactory.getComponentAccentForName(sName);
 		
-		return null;
+		if(builderObj == null)
+			throw new WicketComponentBuilderException("Builder for name '"+ sName +" not found");
+		
+		return handleMultiTypeBuilder(builderObj, sName, null, atts);
+	}
+	
+	private Object handleMultiTypeBuilder(Object builder, String name, Object defaultArg, Map attributes)
+	{
+		if(builder instanceof WicketModelBuilder)
+		{
+			WicketModelBuilder modelBuilder = (WicketModelBuilder) builder;
+			try
+			{
+				IModel model = modelBuilder.create(defaultArg, attributes);
+				return model;
+			}
+			catch(WicketComponentBuilderException e)
+			{
+				throw e;
+			}
+			catch (Exception e)
+			{
+				throw new WicketComponentBuilderException("Error building model", e);
+			}
+			
+		}
+		
+		throw new WicketComponentBuilderException("No build type found");
 	}
 
 	protected Object createNode(Object name, Object value) {
@@ -86,17 +189,12 @@ public class WicketBuilder extends BuilderSupport {
 	}
 
 	protected Object createNode(Object name) {
-		return null;
+		return createNode(name, null);
 	}
 
 	protected void setParent(Object parent, Object child) {
 			
-		if (parent instanceof MarkupContainer && child instanceof Component) {
-			MarkupContainer containerParent = (MarkupContainer) parent;
-			Component componentChild = (Component) child;
-
-			containerParent.add(componentChild);
-		}
+		
 	}
 	
 	public void kickStart(MarkupContainer container, Closure closure)
@@ -124,4 +222,6 @@ public class WicketBuilder extends BuilderSupport {
 		if(getCurrent() instanceof Component)
 			((Component)getCurrent()).add(behavior);
 	}
+
+	
 }

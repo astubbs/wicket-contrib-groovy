@@ -29,6 +29,8 @@ class FormsPage extends WebPage {
 				if(it.type.primitive || it.type == String.class)
 					println("${it.name}: ${it.value}")
 			})
+			
+//			doSomething()
 		})
 		{
 			textField('firstName')

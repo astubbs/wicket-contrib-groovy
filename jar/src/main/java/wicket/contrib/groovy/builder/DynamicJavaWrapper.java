@@ -13,6 +13,7 @@ import java.util.List;
  */
 public interface DynamicJavaWrapper
 {
-	public Class wrapClass(Class javaClass, List methods, List closures);
-	public Class wrapClass(Class javaClass, List methods, List closures, String extraCode, String interfaces);
+	public Class wrapClass(Class javaClass, List methods);
+	public Class wrapClass(Class javaClass, List methods, String extraCode, String interfaces);
+	public void fillMethods(DynamicJavaWrapperScriptable scriptable, List methods, List closures);
 }

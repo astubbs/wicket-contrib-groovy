@@ -1,8 +1,5 @@
 package wicket.contrib.groovy.builder;
 
-import groovy.lang.Closure;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,26 +17,26 @@ public class WicketComponentOverrideDescriptor
 {
 	Class javaClass;
 	List methods;
-	List closures;
+//	List closures;
 	String extraCode;
 	String interfaces;
 	
 	List closureClasses;
 	
-	protected List getClosureClasses()
-	{
-		if(closureClasses == null)
-		{
-			closureClasses = new ArrayList();
-			for(int i=0; i<closures.size(); i++)
-			{
-				closureClasses.add(
-						((Closure)closures.get(i)).getClass()
-						);
-			}
-		}
-		return closureClasses;
-	}
+//	protected List getClosureClasses()
+//	{
+//		if(closureClasses == null)
+//		{
+//			closureClasses = new ArrayList();
+//			for(int i=0; i<closures.size(); i++)
+//			{
+//				closureClasses.add(
+//						((Closure)closures.get(i)).getClass()
+//						);
+//			}
+//		}
+//		return closureClasses;
+//	}
 	
 	/*
 	 * TODO: Review hashCode and equals to make sure they make sense.
@@ -50,13 +47,14 @@ public class WicketComponentOverrideDescriptor
 	{
 		final int PRIME = 31;
 		int result = 1;
-		result = PRIME * result + ((closures == null) ? 0 : getClosureClasses().hashCode());
+//		result = PRIME * result + ((closures == null) ? 0 : getClosureClasses().hashCode());
 		result = PRIME * result + ((extraCode == null) ? 0 : extraCode.hashCode());
 		result = PRIME * result + ((interfaces == null) ? 0 : interfaces.hashCode());
 		result = PRIME * result + ((javaClass == null) ? 0 : javaClass.hashCode());
 		result = PRIME * result + ((methods == null) ? 0 : methods.hashCode());
 		return result;
 	}
+	
 	public boolean equals(Object obj)
 	{
 		if (this == obj)
@@ -66,14 +64,14 @@ public class WicketComponentOverrideDescriptor
 		if (getClass() != obj.getClass())
 			return false;
 		final WicketComponentOverrideDescriptor other = (WicketComponentOverrideDescriptor) obj;
-		if (closures == null)
-		{
-			if (other.closures != null)
-				return false;
-		}
-		
-		else if (!getClosureClasses().equals(other.getClosureClasses()))
-			return false;
+//		if (closures == null)
+//		{
+//			if (other.closures != null)
+//				return false;
+//		}
+//		
+//		else if (!getClosureClasses().equals(other.getClosureClasses()))
+//			return false;
 		if (extraCode == null)
 		{
 			if (other.extraCode != null)

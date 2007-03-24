@@ -32,6 +32,11 @@ public class TextFieldComponentBuilder extends FormComponentComponentBuilder
 		super(componentClass);
 	}
 
+	protected void writeSimpleViewTagStart(String key)
+	{
+		writeViewTagText("<input type='text' wicket:id='"+ key +"'/>\n");
+	}
+
 	public List getConstructorParameters(String key, Map attributes)
 	{
 		List params = new ArrayList();

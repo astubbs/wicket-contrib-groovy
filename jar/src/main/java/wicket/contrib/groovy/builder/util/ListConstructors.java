@@ -27,21 +27,21 @@ public class ListConstructors
 {
 	public static List newList(Object arg0)
 	{
-		List retList = new ArrayList(5);
+		List retList = new ArrayList();
 		retList.add(arg0);
 		return retList;
 	}
 	
 	public static List newList(Object arg0, Object arg1)
 	{
-		List retList = new ArrayList(5);
+		List retList = new ArrayList();
 		retList.add(arg0);
 		retList.add(arg1);
 		return retList;
 	}
 	public static List newList(Object arg0, Object arg1, Object arg2)
 	{
-		List retList = new ArrayList(5);
+		List retList = new ArrayList();
 		retList.add(arg0);
 		retList.add(arg1);
 		retList.add(arg2);
@@ -49,7 +49,7 @@ public class ListConstructors
 	}
 	public static List newList(Object arg0, Object arg1, Object arg2, Object arg3)
 	{
-		List retList = new ArrayList(5);
+		List retList = new ArrayList();
 		retList.add(arg0);
 		retList.add(arg1);
 		retList.add(arg2);
