@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>QuickStart</title>
+    </head>
+    <body>
+        <h1>QuickStart</h1>
+        <p>Groovy, is.</p>
+        <form wicket:id="baseForm">
+        	
+        	<table>
+				<tr wicket:id="testListView">
+					<td><span wicket:id="innerLabel"></span></td>
+					
+				</tr>
+			</table>
+        	<a href="#" wicket:id="ajaxLinkClosure">ajaxLinkClosure</a>
+        	<a href="#" wicket:id="testAjaxSubmitLink">testAjaxSubmitLink</a>
+        	<span wicket:id="testCheckGroup">
+        	<input type="checkbox" wicket:id="testCheckGroupSelector">check</input>
+        	</span>
+        	<span wicket:id="testingTemplateWriter"></span>
+        	<a href="#" wicket:id="customComponent">customComponent</a>
+        	<a href="#" wicket:id="initLink">
+        		<span wicket:id="initLinkLabel"></span>
+			</a>
+        	<a href="#" wicket:id="extLink1">extLink1</a>
+        	<a href="#" wicket:id="extLink2">extLink2</a>
+        	<textarea wicket:id="testArea"></textarea>
+        	<button wicket:id="normalButton"></button>
+        	<button wicket:id="onSubmitButton"></button>
+        	
+        	<input type="text" wicket:id="textField"/>
+        	<input type="text" wicket:id="validTextField"/>
+        	<input type="text" wicket:id="validTextField2"/>
+        	
+        	<input type="text" wicket:id="integerField"/>
+        	<input type="text" wicket:id="integerField2"/>
+        	<input type="password" wicket:id="passwordText"/>
+        	<input type="text" wicket:id="requiredText"/>
+        	
+        </form>
+        
+        <form wicket:id="baseForm2">
+			<span wicket:id='testModelChild'></span>
+        	<span wicket:id='testModelChildWithOverride'></span>
+        	<span wicket:id='testPropertyModel'></span>
+        </form>
+        
+        <form wicket:id="baseForm3">
+        
+        
+        </form>
+        
+        <form wicket:id="normalForm"></form>
+
+          <form wicket:id="onSubmitClosureForm"></form>
+
+            <form wicket:id="onErrorClosureForm"></form>
+       
+    </body>
+</html>

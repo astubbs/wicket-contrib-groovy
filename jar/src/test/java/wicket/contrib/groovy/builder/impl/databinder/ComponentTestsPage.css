@@ -1,0 +1,37 @@
+div#listings {
+	float: left; 
+	width: 35em;
+}
+
+select#categoryFilter {
+	float: right; 
+	margin-top: 4px;
+}
+
+div.searchPanel {
+	margin-bottom: .5em;
+}
+
+table#contactTable {
+	width: 100%;
+	clear: both;
+}
+
+div#edit {
+	float: left;
+	margin: 3.5em 0 0 2em;
+	padding: 	1em 1.5em 0 1.5em;
+	background: #FFE7D8;
+	border: dashed thin #E9996E;
+	width: 21em;
+}
+
+div#edit h2{
+	margin-top: 0;
+}
+
+p#footer {
+	position: absolute;
+	bottom: .5em;
+	right: 1.5em;
+}

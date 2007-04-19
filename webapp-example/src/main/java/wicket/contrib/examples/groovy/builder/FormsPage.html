@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>QuickStart</title>
+    </head>
+    <body>
+        <h1>QuickStart</h1>
+        <p>Groovy, is.</p>
+        <form wicket:id="mainForm">
+        	
+        	firstName: <input type="text" wicket:id="firstName"/><br/>
+        	lastName: <input type="text" wicket:id="lastName"/><br/>
+        	age: <input type="text" wicket:id="age"/><br/>
+        	salary: <input type="text" wicket:id="salary"/><br/>
+        	
+        	address.address1: <input type="text" wicket:id="address.address1"/><br/>
+        	address.address2: <input type="text" wicket:id="address.address2"/><br/>
+        	address.city: <input type="text" wicket:id="address.city"/><br/>
+        	address.state: <input type="text" wicket:id="address.state"/><br/>
+        	address.zip: <input type="text" wicket:id="address.zip"/><br/>
+        	<input type="submit" value="submit page"/>
+        	
+        	<p/>
+        	<p>Favorites</p>
+        	<table>
+				<tr wicket:id="favorites">
+					<td><span wicket:id="name"></span></td>
+					<td><span wicket:id="url"></span></td>
+				</tr>
+			</table>
+        </form>
+    </body>
+</html>
+
